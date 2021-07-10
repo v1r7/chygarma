@@ -20,14 +20,17 @@ class Author(models.Model):
     """Модель Автора"""
     name = models.CharField(verbose_name='Имя', max_length=255)
     last_name = models.CharField(verbose_name='Фамилия', max_length=255)
-    picture = models.ManyToManyField(Picture, related_name='authors_pic', verbose_name='Аватар')
+    picture = models.ManyToManyField(Picture, related_name='authors_pic',
+                                     verbose_name='Аватар', blank=True)
+    warning = models.BooleanField(default=False, verbose_name='предупреждение')
 
     class Meta:
         verbose_name = 'Автор'
         verbose_name_plural = 'Авторы'
 
+
     def __str__(self):
-        return self.name
+        return u"%s %s"%(self.name, self.last_name)
 
 class Category(models.Model):
     """Модель Категорий"""
@@ -66,7 +69,7 @@ class Like(models.Model):
 
 class Viewer(models.Model):
     """Модель Читателей"""
-    value = models.SmallIntegerField("Значение", default=0)
+    value = models.SmallIntegerField("Значение",)
 
     def __str__(self):
         return f'{self.value}'
@@ -74,34 +77,6 @@ class Viewer(models.Model):
     class Meta:
         verbose_name = 'Читатель'
         verbose_name_plural = 'Читатели'
-        ordering = ["-value"]
-
-class Verse(models.Model):
-    """Модель Стихов"""
-    name = models.CharField(verbose_name='Название', max_length=255)
-    content = models.TextField(verbose_name='Содержание')
-    views = models.ForeignKey(Viewer,verbose_name='Читатели',
-                              on_delete=models.CASCADE, default=0)
-    authors = models.ManyToManyField(Author, verbose_name='Автор произведения')
-    description = models.TextField(verbose_name='Описание',)
-
-    tags = models.ForeignKey(Tag, verbose_name='Тэги',
-                             on_delete=models.SET_NULL,
-                             null=True)
-    picture = models.ManyToManyField(Picture, related_name='product_pictures',
-                                     verbose_name='Иллюстрация')
-    pubdate = models.DateField(auto_now_add=True, verbose_name='Дата публикации')
-    like = models.ForeignKey(Like, verbose_name='Нравится',
-                             on_delete=models.SET_NULL,
-                             null=True)
-
-    class Meta:
-        verbose_name = 'Стих'
-        verbose_name_plural = 'Стихи'
-
-    def __str__(self):
-        return self.name
-
 
 class Comment(models.Model):
     """ Модель Коментарий"""
@@ -116,3 +91,34 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+class Verse(models.Model):
+    """Модель Стихов"""
+    name = models.CharField(verbose_name='Название', max_length=255)
+    content = models.TextField(verbose_name='Содержание')
+    views = models.ForeignKey(Viewer, verbose_name='Читатели',
+                              on_delete=models.CASCADE, blank=True)
+    authors = models.ForeignKey(to=Author, verbose_name='Автор произведения', on_delete=models.CASCADE)
+    description = models.TextField(verbose_name='Описание', blank=True, max_length=70)
+
+    tags = models.ForeignKey(Tag, verbose_name='Тэги',
+                             on_delete=models.SET_NULL,
+                             null=True)
+    picture = models.ManyToManyField(to=Picture, related_name='verse_pictures',
+                                     verbose_name='Иллюстрация', blank=True)
+    pubdate = models.DateField(auto_now_add=True, verbose_name='Дата публикации')
+    like = models.ForeignKey(Like, verbose_name='Нравится',
+                             on_delete=models.SET_NULL,
+                             null=True, blank=True)
+    recommend = models.BooleanField(default=False, verbose_name='рекомендация произведения')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name='жалоба, комментарий',
+                                blank=True)
+
+    class Meta:
+        verbose_name = 'Стих'
+        verbose_name_plural = 'Стихи'
+
+    def __str__(self):
+        return self.name
+
+
