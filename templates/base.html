@@ -12,7 +12,30 @@
 
 <body>
     <div class="header_block">
+
         <a href="#"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
+
+        {% if user.is_authenticated %}
+                        <span>{{ user.username }}</span>
+                        <a href="{% url 'account_logout' %}"
+                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
+                            Выход
+                        </a>
+                        <a href="{% url 'account_logout' %}"
+                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
+                            Личный кабинет
+                        </a>
+                    {% else %}
+                        <a href="{% url 'account_login' %}"
+                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
+                            Вход
+                        </a>
+                         <a href="{% url 'account_signup' %}"
+                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
+                            Регистрация
+                        </a>
+                    {% endif %}
+
     </div>
     <header class="">
         <img class="header_bg" src="{% static 'img/header_bg.png' %}" alt="" />

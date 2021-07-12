@@ -6,6 +6,7 @@ from apps.verse.models import Verse
 class MainView(TemplateView):
     template_name = 'base.html'
 
+
 class VerseListView(ListView):
     model = Verse
     paginate_by = 6
