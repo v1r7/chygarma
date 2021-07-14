@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.functional import cached_property
 
 from utils.upload import upload_instance
 
@@ -84,6 +84,7 @@ class Verse(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Comment(models.Model):
     """ Модель Коментарий"""
