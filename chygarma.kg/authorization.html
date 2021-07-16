@@ -18,10 +18,11 @@
 
         <form action="">
             <div class="login_title">Войти в аккаунт</div>
-            <input class="login" type="text" placeholder="Логин">
-            <input type="text" class="password" placeholder="Пароль">
+            <input class="login" id="id_login" type="text" placeholder="Логин">
+            <input type="text" id="id_password" class="password" placeholder="Пароль">
             <div class="forget_password">Забыли пароль? <a href="#">Восстановление пароля</a></div>
-            <button class="login_btn">Войти</button>
+            <button  class="login_btn" id="login_btn_id">Войти</button>
+            <p id="login_error_block_id" style="display: none; color: red; font-size: 13px; margin-left: 10px">Логин или пароль не правильно введены!</p>
             <div class="forget_password">Нету аккаунта? <a href="#">Зарегистрироваться</a></div>
         </form>
     </div>

@@ -43,6 +43,7 @@ input {
     margin-top: 26px;
     border-radius: 10px;
     padding: 24px;
+    color: black;
 }
 
 .forget_password {

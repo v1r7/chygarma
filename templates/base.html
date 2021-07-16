@@ -14,24 +14,24 @@
 <body>
     <div class="header_block">
 
-        <a href="#"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
+        <a href="{% url 'index_page' %}"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
 
         {% if user.is_authenticated %}
-                        <span>{{ user.username }}</span>
-                        <a href="{% url 'account_logout' %}"
+                        <span>{{ user.login}}</span>
+                        <a href="{% url 'logout' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Выход
                         </a>
-                        <a href="{% url 'authors_page' %}"
+                        <a href="{% url 'control_panel' %} "
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Личный кабинет
                         </a>
                     {% else %}
-                        <a href="{% url 'account_login' %}"
+                        <a href="{% url 'login' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Вход
                         </a>
-                         <a href="{% url 'account_signup' %}"
+                         <a href="{% url 'register' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Регистрация
                         </a>
@@ -58,3 +58,25 @@
     <div class="header__title header__title_red"></div>
     <div class="header__about-us_red"></div>
 </header> -->
+<script>
+        function getCookie(name) {
+            let cookieValue = null;
+
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                console.log(cookies);
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+
+            return cookieValue;
+        };
+    </script>
+
+{% block js %}
+{% endblock %}

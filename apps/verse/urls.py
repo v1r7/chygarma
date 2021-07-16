@@ -1,11 +1,11 @@
 from django.urls import path
 
-from apps.verse.views import IndexView, AuthorListView, VerseListView, AuthorsView
+from apps.verse.views import IndexView, VerseListView, VerseDetailView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index_page'),
-    path('', VerseListView.as_view(), name="verse_list"),
-    path('authors_page/', AuthorListView.as_view(), name="authors_page"),
-    path('authors_profile/', AuthorsView.as_view(), name='authours_profile')
+    # path('', VerseListView.as_view(), name="verse_list"),
+    # path('control_panel/', VerseListView.as_view(), name="verses_list"),
+    path('verse_detail/<int:pk>', VerseDetailView.as_view(), name="verse_detail")
 
 ]
