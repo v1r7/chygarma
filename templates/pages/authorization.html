@@ -1,0 +1,57 @@
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/authorization.css' %}">
+    <title>Войти</title>
+</head>
+
+<body>
+    <div class="header_block">
+        <a href="{% url 'index_page' %}"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
+    </div>
+    <img src="{% static 'img/header_bg.png' %}" class="bg" alt="">
+    <div class="form">
+
+        <form action="">
+            <div class="login_title">Войти в аккаунт</div>
+            <input class="login" id="id_login" type="text" placeholder="Логин">
+            <input type="password" id="id_password" class="password" placeholder="Пароль">
+            <div class="forget_password">Забыли пароль? <a href="#">Восстановление пароля</a></div>
+            <button class="login_btn" id="login_btn_id">Войти</button>
+            <p id="login_error_block_id" style="display: none; color: red; font-size: 13px; margin-left: 10px">Логин или пароль не правильно введены!</p>
+            <div class="forget_password">Нету аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></div>
+        </form>
+    </div>
+    <footer></footer>
+</body>
+
+</html>
+<script>
+        function getCookie(name) {
+            let cookieValue = null;
+
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                console.log(cookies);
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+
+            return cookieValue;
+        };
+    </script>
+
+    <script>
+        const loginUrl = "{% url 'login' %}";
+        const token = getCookie(name='csrftoken');
+    </script>
+    <script src="{% static 'js/login.js' %}"></script>

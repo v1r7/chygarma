@@ -1,0 +1,67 @@
+
+{% load static %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/authorization.css' %}">
+    <title>Зарегистрироваться</title>
+</head>
+
+<body>
+    <div class="header_block">
+        <a href="{% url 'index_page' %}"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
+    </div>
+    <img src="{% static 'img/header_bg.png' %}" class="bg" alt="">
+    <div class="form">
+
+        <form action="" class="form_checkin">
+            <div class="login_title">Зарегистрироваться</div>
+            <input type="text" id="first_name_id" class="name" placeholder="Имя">
+            <p id="first_name_error_id" style="display: none; color: red; font-size: 13px; margin-left: 10px">Введите имя</p>
+            <input type="text" id="last_name_id" class="name" placeholder="Фамилия">
+            <p id="last_name_error_id" style="display: none; color: red; font-size: 13px; margin-left: 10px">Введите Фамилию</p>
+            <input type="email" id="email_id" class="email" placeholder="E-mail">
+            <p id="email_error_id" style="display: none; color: red; font-size: 13px; margin-left: 10px">Введите почту</p>
+            <input class="checkin"  id="login_id" type="text" placeholder="Логин">
+            <p id="login_error_id" style="display: none; color: red; font-size: 13px; margin-left: 10px">Введите логин</p>
+            <input type="password" id="pass_1_id"  class="password" placeholder="Пароль">
+            <p id="pass_1_error_id" style="display: none; color: red; font-size: 13px; margin-left: 10px">Введите пароль</p>
+            <li class="password_text">Должен состоять минимум из 8 знаков</li>
+            <button class="login_btn" id="register_btn_id">Зарегистрироваться</button>
+            <div class="forget_password">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></div>
+        </form>
+    </div>
+    <footer></footer>
+</body>
+
+</html>
+
+<script>
+        function getCookie(name) {
+            let cookieValue = null;
+
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                console.log(cookies);
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+
+            return cookieValue;
+        };
+    </script>
+
+
+    <script>
+        const registerUrl = "{% url 'register' %}";
+        const token = getCookie(name='csrftoken');
+    </script>
+    <script src="{% static 'js/auth.js' %}"></script>

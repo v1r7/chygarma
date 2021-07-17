@@ -1,0 +1,9 @@
+SECRET_KEY = djangosecretkey
+DEBUG = True or False
+ALLOWED_HOSTS = * or enter hosts
+DB_ENGINE = django.db.backends.postgresql_psycopg2 or enter ur DBENGINE
+DB_NAME = DBNAME
+DB_USER = DBUSER
+DB_PASSWORD = DBPASSWORD
+DB_HOST = 127.0.0.1 or the other IP
+DB_PORT = 5432

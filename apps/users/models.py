@@ -5,7 +5,6 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-
 from utils.upload import upload_instance
 
 
@@ -14,29 +13,29 @@ class UserManager(BaseUserManager):
         This is a manager for Account class
     """
 
-    def create_user(self, login=None, password=None):
+    def create_user(self, login, email=None, password=None):
+
         if not login:
             raise ValueError("User must enter login")
+        email = UserManager.normalize_email(email)
 
-        user = self.model(login=self.get_username())
+        user = self.model(login=login, email=email,
+                          is_staff=False, is_active=True, is_superuser=False,)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
     def create_superuser(self, login, password):
-        user = self.create_user(login=self.get_username())
-        user.set_password(password)
-
+        user = self.create_user(
+            login,
+            password=password,
+        )
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
 
         return user
-
-
-
-
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -69,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Пользователи/авторы'
 
     def __str__(self):
-        return self.login
+        return u"%s %s"% (self.first_name, self.last_name)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

@@ -30,9 +30,6 @@ class Tag(models.Model):
         return self.name
 
 
-
-
-
 class Follower(models.Model):
     """Модель Читателей"""
     value = models.SmallIntegerField("Количетво фоловеров", null=True)
@@ -54,7 +51,7 @@ class Verse(models.Model):
                               on_delete=models.SET_NULL, blank=True, null=True)
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL,
                                  null=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор')
     description = models.TextField(verbose_name='Описание', blank=True, max_length=70)
 
     tags = models.ForeignKey(Tag, verbose_name='Тэги',
@@ -86,6 +83,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
 
 class Like(models.Model):
     """Модель Лайков"""

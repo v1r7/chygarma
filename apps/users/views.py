@@ -1,4 +1,3 @@
-
 import json
 
 from django.contrib.auth import login, logout
@@ -12,7 +11,6 @@ from apps.users.forms import LoginForm
 from apps.users.models import User
 from apps.users.services import authenticate, create_user, check_email
 from apps.verse.models import Verse
-from apps.verse.views import VerseListView
 
 
 class LoginView(TemplateView):
@@ -107,7 +105,7 @@ class ControlPanelListView(ListView):
             content=data.get('content'),
             author=request.user,
             tags=data.get('tags'),
-            picture=data.get('picture'),
+            # picture=data.get('picture'),
             description=data.get('description')
 
         )

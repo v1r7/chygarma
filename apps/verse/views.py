@@ -1,19 +1,18 @@
 from django.template import loader
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
 from apps.verse.models import Verse
 
 
-class IndexView(ListView):
-    model = Verse
+class IndexView(TemplateView):
     template_name = 'pages/index_page.html'
-    context_object_name = 'verse_list'
 
 
-    def get_context_data(self,  **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        template = loader.get_template('pages/index_page.html')
-        context = {'verse': Verse.objects.all()}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['verse'] = Verse.objects.filter(recommend=True)
+
         return context
 
 

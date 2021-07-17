@@ -11,7 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Verse)
 class VerseAdmin(admin.ModelAdmin):
-    list_display = ['name',  'content', 'tags', 'description', 'recommend', 'get_image']
+    list_display = ['name',  'content', 'tags', 'author', 'description', 'recommend', 'get_image']
 
     list_filter = ['pubdate', ]
 
