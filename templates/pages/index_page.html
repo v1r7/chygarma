@@ -64,7 +64,11 @@
             <a class="watch_composition" href="#">Смотреть все произведения</a>
         </div>
     </section>
-    <section class="redaction container">
+
+
+
+
+   <section class="redaction container">
         <div class="composition_head">Выбор редакции</div>
         <div class="redaction_text">Высоко оценненные работы авторов</div>
         <div class="columns_redaction">
@@ -73,57 +77,69 @@
                 <a class="all_composition" href="#">Все произведения</a>
                 <img src="{% static 'img/atnic_picture.svg' %}" alt="" class="atnic_picture_redaction">
             </div>
-{#      цикл для реком     #}
-            {% for verse in verses_list %}
             <div class="mini_blocks">
                 <div class="mini_block light_block">
-                    <img src="" alt="" class="crown">
-                    <div class="mini_block_heading">{{ verse.name }}</div>
-                    <div class="mini_block_author">АВТОР</div>
-                    <div class="mini_block_type">КАТЕГОРИЯ</div>
+                    <img src="{% static 'img/crown.svg' %}" alt="" class="crown">
+                    <div class="mini_block_heading">Название произведения</div>
+                    <div class="mini_block_author">автор</div>
+                    <div class="mini_block_type">Жанр</div>
                 </div>
+
+                {% for verse in verse_list %}
+                {% if forloop.counter|divisibleby:2 %}
+                    <div class="mini_block light_block">
+                    <img src="{% static 'img/crown.svg' %}" alt="" class="crown">
+                   <div class="mini_block_heading">{{ verse.name }} </div>
+                    <div class="mini_block_author">{{ verse.author }}</div>
+                    <div class="mini_block_type">{{ verse.category }}</div>
+                </div>
+
+                {% else %}
+                <div class="mini_block ">
+                    <img src="{% static 'img/crown.svg' %}" alt="" class="crown">
+                   <div class="mini_block_heading">{{ verse.name }} </div>
+                    <div class="mini_block_author">{{ verse.author }}</div>
+                    <div class="mini_block_type">{{ verse.category }}</div>
+                </div>
+                {% endif %}
                 {% endfor %}
-            {#      цикл для реком     #}
-
 
             </div>
-            </div>
+        </div>
     </section>
+
     <section class="popular_authors container">
         <div class="authors_heading">Популярные авторы</div>
         <div class="authors_text">Авторы набравшие наибольшее количество оценок и рецензий</div>
         <div class="columns_authors">
-            <div class="columns">
-            {% for authors in authors %}
+        <div class="columns">
+                        {% for author in author_banner %}
+                {% if forloop.counter|divisibleby:2 %}
                 <div class="column">
                     <img src="{% static 'img/ava.svg' %}" alt="" class="column_avatar">
-                    <div class="name_author">{{ authors.first_name }} {{ authors.last_name }}</div>
+                    <div class="name_author">{{ author }}</div>
                     <div class="readers">Количество читателей</div>
                     <div class="comments">Комментариев</div>
                     <div class="types">Жанры</div>
-                    <button class="profile_btn">Смотреть профиль</button>
+                    <a href="{% url 'author_detail' pk=author.pk %}"><button class="profile_btn" >Смотреть профиль</button></a>
                 </div>
+                {% else %}
+                    <div class="column dark_column">
+                    <img src="{% static 'img/ava.svg' %}" alt="" class="column_avatar">
+                    <div class="name_author">{{ author }}</div>
+                    <div class="readers">readers</div>
+                    <div class="comments">comments</div>
+                    <div class="types">types</div>
+                    <a href="{% url 'author_detail' pk=author.pk %}"><button class="profile_btn light_profile_btn">Смотреть профиль</button></a>
+                </div>
+
+                {% endif %}
                 {% endfor %}
-                <div class="column dark_column">
-                    <img src="{% static 'img/ava.svg' %}" alt="" class="column_avatar">
-                    <div class="name_author">name</div>
-                    <div class="readers">readers</div>
-                    <div class="comments">comments</div>
-                    <div class="types">types</div>
-                    <button class="profile_btn light_profile_btn">Смотреть профиль</button>
-                </div>
-                <div class="column">
-                    <img src="{% static 'img/ava.svg' %}" alt="" class="column_avatar">
-                    <div class="name_author">name</div>
-                    <div class="readers">readers</div>
-                    <div class="comments">comments</div>
-                    <div class="types">types</div>
-                    <button class="profile_btn">Смотреть профиль</button>
-                </div>
+
             </div>
             <div class="authors_nav_column">
                 <img src="{% static 'img/atnic_picture.svg' %}" alt="" class="atnic_picture_author">
-                <a class="all_composition" href="#">Все авторы</a>
+                <a class="all_composition" href="{% url 'author_list' %}">Все авторы</a>
                 <img src="{% static 'img/atnic_picture.svg' %}" alt="" class="atnic_picture_author">
             </div>
     </section>

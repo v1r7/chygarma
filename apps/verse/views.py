@@ -1,17 +1,18 @@
 from django.template import loader
 from django.views.generic import ListView, DetailView, TemplateView
 
-from apps.verse.models import Verse
+from apps.verse.models import Verse, Author
 
 
 class IndexView(TemplateView):
     template_name = 'pages/index_page.html'
 
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['verse'] = Verse.objects.filter(recommend=True)
+        context['verse_list'] = Verse.objects.filter(recommend=True)
+        context['author_banner'] = Author.objects.all()
+        print(context)
 
         return context
 
@@ -29,22 +30,24 @@ class VerseListView(ListView):
         return context
 
 
-class VerseDetailView(DetailView):
-    template_name = 'pages/control_panel.html'
+class AuthorDetailView(DetailView):
+    template_name = 'pages/author_profile_list.html'
     model = Verse
-    context_object_name = 'verses_detail'
+    context_object_name = 'author_detail'
 
     # def get_context_data(self, **kwargs):
-    #     context = super(VerseDetailView, self).get_context_data(**kwargs)
-    #     print('yes')
+    #     context = super(AuthorDetailView, self).get_context_data(**kwargs)
     #     verse = context.get('verse')
     #     context['first_picture'] = verse.get_first_picture
-    #     print(context)
+    #
     #     return context
+    #
 
 
 
-
-
+class AuthorlistView(ListView):
+    template_name = 'pages/author_list.html'
+    model = Verse
+    context_object_name = 'author_detail'
 
 

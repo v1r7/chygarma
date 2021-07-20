@@ -17,7 +17,7 @@
         <a href="{% url 'index_page' %}"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
 
         {% if user.is_authenticated %}
-                        <span>{{ user.login}}</span>
+                        <span>{{ user.login }}</span>
                         <a href="{% url 'logout' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Выход
