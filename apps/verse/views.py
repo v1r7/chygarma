@@ -1,4 +1,8 @@
+import json
+
+from django.http import JsonResponse
 from django.template import loader
+from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
 
 from apps.verse.models import Verse, Author
@@ -51,3 +55,17 @@ class AuthorlistView(ListView):
     context_object_name = 'author_detail'
 
 
+class AsyncVerseSearchListView(ListView):
+    queryset = Verse.objects.filter(name=True)
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode())
+        verse_list = self.queryset.filter(name__icontains=data.get('value'))
+
+        context = {'verses_list': verse_list}
+
+        html = render_to_string(template_name='partials/verses_control_panel.html',
+                                context=context,
+                                request=request)
+
+        return JsonResponse({'html': html}, status=200)

@@ -1,0 +1,7 @@
+{% for verse in verses %}
+              {% if forloop.counter|divisibleby:2 %}
+                <div class="creation__title-grey">{{ verse.name }}</div>
+              {% else %}
+                <div class="creation__title-white">{{ verse.name }}</div>
+              {% endif %}
+{% endfor %}

@@ -64,7 +64,7 @@
           <h1 class="creation__text">мои произведения</h1>
         </div>
         <div class="creation__inputs">
-          <input class="creation__input" placeholder="Поиск" type="text" />
+          <input class="creation__input" id="search_input_id" placeholder="Поиск" type="text" />
           <div class="creation__search-icon">
             <img src="{% static '/img/search__icon.png' %}" alt="">
           </div>
@@ -77,14 +77,10 @@
               <p class="creation__top-big">Название произведения</p>
               <p class="creation__top-text">Жанр и дата публикации</p>
               <span class="creation__top-span">{{ user.first_name }} {{ user.last_name }}</span>
-            </div>
-            {% for verse in verses %}
-              {% if forloop.counter|divisibleby:2 %}
-                <div class="creation__title-grey">{{ verse.name }}</div>
-              {% else %}
-                <div class="creation__title-white">{{ verse.name }}</div>
-              {% endif %}
-            {% endfor %}
+            </div >
+          <div id="search_input_block_id">
+            {% include 'partials/verses_control_panel.html' %}
+          </div>
           </div>
           <div class="reviews__symbol">
             <div class="reviews__arrows">
@@ -159,9 +155,11 @@
 <script>
     const verseCreateUrl = '{% url "control_panel" %}';
     const AuthorId = {{ author_id }};
+    const verseSearchUrl = '{% url "search_list" %}';
 </script>
 
 <script src="{% static 'js/control_panel.js' %}"></script>
+<script src="{% static 'js/search_input.js' %}"></script>
 
  <script>
         function getCookie(name) {
