@@ -100,8 +100,8 @@ class CreateListVerseView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['verses'] = Verse.objects.filter(author=True)
         context['author_id'] = Author.objects.filter(author=self.request.user).first().id
+        context['verses'] = Verse.objects.all()
 
         return context
 

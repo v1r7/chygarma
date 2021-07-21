@@ -109,8 +109,13 @@
                             <p class="all__block-p">Жанр и дата публикации</p>
                             <span class="all__block-name">Саякбай каралаев</span>
                         </div>
-                        <div class="all__block-grey"></div>
-                        <div class="all__block-white"></div>
+                        {% for authors in authors_list %}
+                            {% if forloop.counter|divisibleby:2 %}
+                        <div class="all__block-grey">{{ authors }}</div>
+                            {% else %}
+                        <div class="all__block-white">{{ authors }}</div>
+                            {% endif %}
+                        {% endfor %}
                         <div class="all__block-grey"></div>
                         <div class="all__block-white"></div>
                         <div class="all__block-grey"></div>

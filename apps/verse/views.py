@@ -1,27 +1,19 @@
 import json
-
 from django.http import JsonResponse
-from django.template import loader
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
-
 from apps.verse.models import Verse, Author
 
 
 class IndexView(TemplateView):
     template_name = 'pages/index_page.html'
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['verse_list'] = Verse.objects.filter(recommend=True)
         context['author_banner'] = Author.objects.all()
-        print(context)
 
         return context
-
-
-
 
 class VerseListView(ListView):
     model = Verse
@@ -30,9 +22,8 @@ class VerseListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["verses"] = Verse.objects.all()
-        print(context)
-        return context
 
+        return context
 
 class AuthorDetailView(DetailView):
     template_name = 'pages/author_profile_list.html'
@@ -47,12 +38,19 @@ class AuthorDetailView(DetailView):
     #     return context
     #
 
-
-
 class AuthorlistView(ListView):
     template_name = 'pages/author_list.html'
     model = Verse
     context_object_name = 'author_detail'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['authors_list'] = Author.objects.all()
+
+        return context
+
+
+
 
 
 class AsyncVerseSearchListView(ListView):
@@ -61,7 +59,6 @@ class AsyncVerseSearchListView(ListView):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
         verse_list = self.queryset.filter(name__icontains=data.get('value'))
-
         context = {'verses_list': verse_list}
 
         html = render_to_string(template_name='partials/verses_control_panel.html',
