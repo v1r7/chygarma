@@ -1,10 +1,13 @@
 import json
-
+from django.db.models import Q
 from django.db.models import Count
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
+
+
 from apps.verse.models import Verse, Author, AuthorProfile
+
 
 
 class IndexView(TemplateView):
@@ -16,7 +19,6 @@ class IndexView(TemplateView):
         context['author_banner'] = Author.objects.order_by("id")[:3]
 
         return context
-
 
 
 class VerseListView(ListView):
@@ -41,7 +43,7 @@ class AuthorDetailView(DetailView):
         author_profile = AuthorProfile.objects.first()
         context['readers_count'] = author_profile.readers.count()
         context['profile_name'] = AuthorProfile.objects.first()
-        print(context)
+
 
         return context
 
@@ -60,15 +62,33 @@ class AuthorlistView(ListView):
 
 
 class AsyncVerseSearchListView(ListView):
-    queryset = Verse.objects.filter(name=True)
+    queryset = Verse.objects.all()
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
         verse_list = self.queryset.filter(name__icontains=data.get('value'))
         context = {'verses_list': verse_list}
-
-        html = render_to_string(template_name='partials/verses_control_panel.html',
+        html = render_to_string(template_name='partials/verses_search.html',
                                 context=context,
                                 request=request)
 
         return JsonResponse({'html': html}, status=200)
+
+
+class AsyncAuthorSearchListView(ListView):
+    queryset = Author.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode())
+        author_search_list = self.queryset.filter(Q(author__first_name__icontains=data.get('value')) |
+                                                  Q(author__last_name__icontains=data.get('value')))
+        context = {'author_search_list': author_search_list}
+        html = render_to_string(template_name='partials/author_search_list.html',
+                                context=context,
+                                request=request)
+
+        return JsonResponse({'html': html}, status=200)
+
+# def category_view(request):
+#     form = CategoryForm()
+#     return render_to_string('control_panel.html', {'form': form})

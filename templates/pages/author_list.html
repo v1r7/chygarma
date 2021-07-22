@@ -97,7 +97,7 @@
             <div class="all">
                 <h2 class="all__title">Все авторы</h2>
                 <div class="all__search">
-                    <input placeholder="Поиск" type="text" class="all__input">
+                    <input placeholder="Поиск" id="author_search_input_id" type="text" class="all__input">
                     <div class="all__search-icon">
                         <img src="{% static 'img/search__icon.png' %}" alt="" class="search-icon">
                     </div>
@@ -109,6 +109,7 @@
                             <p class="all__block-p">Жанр и дата публикации</p>
                             <span class="all__block-name">Саякбай каралаев</span>
                         </div>
+                    <div id="author_search_input_block_id">
                         {% for authors in authors_list %}
                             {% if forloop.counter|divisibleby:2 %}
                         <div class="all__block-grey">{{ authors }}</div>
@@ -116,6 +117,7 @@
                         <div class="all__block-white">{{ authors }}</div>
                             {% endif %}
                         {% endfor %}
+                    </div>
                         <div class="all__block-grey"></div>
                         <div class="all__block-white"></div>
                         <div class="all__block-grey"></div>
@@ -149,4 +151,11 @@
   </body>
 </html>
 
+{% endblock %}
+
+{% block js %}
+<script>
+    const authorSearchUrl = '{% url "author_search_list" %}';
+</script>
+    <script src="{% static 'js/author_search_input.js' %}"></script>
 {% endblock %}

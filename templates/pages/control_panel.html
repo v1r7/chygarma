@@ -77,9 +77,15 @@
               <p class="creation__top-big">Название произведения</p>
               <p class="creation__top-text">Жанр и дата публикации</p>
               <span class="creation__top-span">{{ user.first_name }} {{ user.last_name }}</span>
-            </div >
+            </div>
           <div id="search_input_block_id">
-            {% include 'partials/verses_control_panel.html' %}
+              {% for verse in verses %}
+              {% if forloop.counter|divisibleby:2 %}
+                <div class="creation__title-grey">{{ verse.name }} {{ verse.pubdate }} {{ verse.author }}</div>
+              {% else %}
+                <div class="creation__title-white">{{ verse.name }} {{ verse.pubdate }} {{ verse.author }}</div>
+              {% endif %}
+            {% endfor %}
           </div>
           </div>
           <div class="reviews__symbol">
@@ -138,7 +144,7 @@
             <span class="block-description-text">хештеги</span>
             <input class="block-bottom-input" id="tags_input_id" {{ verse.tags }} type="text">
             <span class="block-description-text">жанр</span>
-            <select class="block-description-select" id="{{ category.name }}" name="">
+            <select class="block-description-select" id="" {{ verse_category }} name="">
                 <option></option>
             </select>
             <button class="block-description-btn" id="verse_btn_id">опубликовать</button>

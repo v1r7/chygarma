@@ -64,6 +64,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Пользователь/автор'
         verbose_name_plural = 'Пользователи/авторы'
 
+    @property
+    def get_special_first_name_last_name(self):
+        return '{}{}'.format(self.first_name, self.last_name)
+
     def __str__(self):
         return u"%s %s"% (self.first_name, self.last_name)
 

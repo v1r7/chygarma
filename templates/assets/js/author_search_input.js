@@ -1,14 +1,14 @@
 'use strict';
 
-
-const searchInput = document.getElementById('search_input_id');
-const searchInputBlock = document.getElementById('search_input_block_id');
+const searchInput = document.getElementById('author_search_input_id');
+const searchInputBlock = document.getElementById('author_search_input_block_id');
 
 searchInput.onkeyup = (event) => {
   if (event.currentTarget.value.length > 2) {
     const data = {value: event.currentTarget.value};
+    console.log(data);
 
-    fetch(verseSearchUrl, {
+    fetch(authorSearchUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, */*, text/plain',

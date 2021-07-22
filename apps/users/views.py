@@ -10,7 +10,7 @@ from django.views.generic import TemplateView, ListView
 from apps.users.forms import LoginForm
 from apps.users.models import User
 from apps.users.services import authenticate, create_user, check_email
-from apps.verse.models import Verse, Author
+from apps.verse.models import Verse, Author, Category
 
 
 class LoginView(TemplateView):
@@ -99,7 +99,7 @@ class CreateListVerseView(ListView):
     paginate_by = 7
 
     def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
+        context = super(CreateListVerseView, self).get_context_data(*args, **kwargs)
         context['author_id'] = Author.objects.filter(author=self.request.user).first().id
         context['verses'] = Verse.objects.all()
 
