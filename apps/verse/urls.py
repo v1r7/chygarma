@@ -11,4 +11,5 @@ urlpatterns = [
     path('authors_list/', AuthorlistView.as_view(), name="author_list"),
     path('search_list/', AsyncVerseSearchListView.as_view(), name='search_list'),
     path('author_search_list/', AsyncAuthorSearchListView.as_view(), name='author_search_list'),
+    # path('', CategoryListView.as_view(), name='category_list')
 ]

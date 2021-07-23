@@ -144,9 +144,15 @@
             <span class="block-description-text">хештеги</span>
             <input class="block-bottom-input" id="tags_input_id" {{ verse.tags }} type="text">
             <span class="block-description-text">жанр</span>
-            <select class="block-description-select" id="" {{ verse_category }} name="">
-                <option></option>
+
+
+            <select class="block-description-select" id=""  name="">
+                {% for category in category_list %}
+                <option>{{ category.name }}</option>
+                {% endfor %}
             </select>
+
+
             <button class="block-description-btn" id="verse_btn_id">опубликовать</button>
               <p id="verse_error_id" style="color: red; font-size: 13px; margin-left: 10px; display: none">Введите не заполненные поля</p>
           </div>

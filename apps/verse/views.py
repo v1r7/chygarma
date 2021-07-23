@@ -1,13 +1,9 @@
 import json
 from django.db.models import Q
-from django.db.models import Count
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
-
-
-from apps.verse.models import Verse, Author, AuthorProfile
-
+from apps.verse.models import Verse, Author, AuthorProfile, Category
 
 
 class IndexView(TemplateView):
@@ -89,6 +85,12 @@ class AsyncAuthorSearchListView(ListView):
 
         return JsonResponse({'html': html}, status=200)
 
-# def category_view(request):
-#     form = CategoryForm()
-#     return render_to_string('control_panel.html', {'form': form})
+# class CategoryListView(ListView):
+#     queryset = Category.objects.all()
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(CategoryListView).get_context_data(**kwargs)
+#         context['category_list'] = Category.objects.all()
+#         print(context)
+#
+#         return context
