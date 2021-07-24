@@ -61,7 +61,7 @@
                 Произведения, которые чаще всего оценивали и писали рецензии
             </div>
             <img src="{% static 'img/atnic_picture.svg' %}" alt="" class="atnic_picture">
-            <a class="watch_composition" href="#">Смотреть все произведения</a>
+            <a class="watch_composition" href="{% url 'all_verses_list' %}">Смотреть все произведения</a>
         </div>
     </section>
 
@@ -74,7 +74,7 @@
         <div class="columns_redaction">
             <div class="redaction_nav_column">
                 <img src="{% static 'img/atnic_picture.svg' %}" alt="" class="atnic_picture_redaction">
-                <a class="all_composition" href="#">Все произведения</a>
+                <a class="all_composition" href="{% url 'all_verses_list' %}">Все произведения</a>
                 <img src="{% static 'img/atnic_picture.svg' %}" alt="" class="atnic_picture_redaction">
             </div>
             <div class="mini_blocks">

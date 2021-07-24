@@ -85,6 +85,21 @@ class AsyncAuthorSearchListView(ListView):
 
         return JsonResponse({'html': html}, status=200)
 
+class AsyncAllVerseSearchListView(ListView):
+    queryset = Verse.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode())
+        print(data)
+        all_verses_list = self.queryset.filter(name__icontains=data.get('value'))
+
+        context = {'all_verses_list': all_verses_list}
+        html = render_to_string(template_name='partials/verse_search_all.html',
+                                context=context,
+                                request=request)
+
+        return JsonResponse({'html': html}, status=200)
+
 # class CategoryListView(ListView):
 #     queryset = Category.objects.all()
 #
@@ -94,3 +109,13 @@ class AsyncAuthorSearchListView(ListView):
 #         print(context)
 #
 #         return context
+
+class AllVersesListView(ListView):
+    template_name = 'pages/works.html'
+    model = Verse
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["all_verses"] = Verse.objects.all()[:7]
+
+        return context

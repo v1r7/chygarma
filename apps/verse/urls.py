@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.verse.views import IndexView, AuthorDetailView, VerseListView, AuthorlistView, AsyncVerseSearchListView, \
-    AsyncAuthorSearchListView
+    AsyncAuthorSearchListView, AllVersesListView, AsyncAllVerseSearchListView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index_page'),
@@ -12,4 +12,6 @@ urlpatterns = [
     path('search_list/', AsyncVerseSearchListView.as_view(), name='search_list'),
     path('author_search_list/', AsyncAuthorSearchListView.as_view(), name='author_search_list'),
     # path('', CategoryListView.as_view(), name='category_list')
+    path('all_works/', AllVersesListView.as_view(), name='all_verses_list'),
+    path('all_verses_search/', AsyncAllVerseSearchListView.as_view(), name='all_verses_search')
 ]

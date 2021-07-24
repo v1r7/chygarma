@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/works.css' %}" />
+  </head>
+  <body>
+    <header class="header">
+
+      <div class="bg__author" style="background-image:  url({% static 'img/works__bg.svg' %});">
+        <span class="author__text-title">Произведения</span>
+      </div>
+    </header>
+    <section class="section">
+      <div class="container">
+        <div class="works">
+          <h1 class="works__title">Популярные произведения</h1>
+          <div class="works__blocks">
+            <div class="works__block-top">
+              <div class="works__block-main">
+                <div class="block__main-texts">
+                  <span class="block__main-text">Название произведения</span>
+                  <span class="block__main-large">Жанр и дата публикации</span>
+                </div>
+                <span class="block__main-textcenter"
+                  >Иллюстрация на фоне затемненная</span
+                >
+                <span class="block__main-textend">Автор</span>
+              </div>
+              <div class="works__block-white"></div>
+              <div class="works__block-grey"></div>
+              <div class="works__block-white"></div>
+            </div>
+            <div class="works__block-bottom">
+              <div class="works__block-white"></div>
+              <div class="works__block-grey"></div>
+              <div class="works__block-white"></div>
+              <div class="works__block-grey"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="all">
+          <h2 class="all__title">все произведения</h2>
+          <div class="all__search">
+            <input placeholder="Поиск" id="verse_search_input_id" type="text" class="all__input" />
+            <div class="all__search-icon">
+              <img src="{% static 'img/search__icon.png' %}" alt="" class="search-icon" />
+            </div>
+          </div>
+          <div class="all__content">
+            <div class="all__blocks">
+              <div class="all__block">
+                <p class="all__block-text">Автор</p>
+                <p class="all__block-p">Жанр и дата публикации</p>
+                <span class="all__block-name">Саякбай каралаев</span>
+              </div>
+                <div id="verse_search_input_block_id">
+                    {% for verses in all_verses %}
+                        {% if forloop.counter|divisibleby:2 %}
+              <div class="all__block-grey">{{ verses.name }} {{ verses.pubdate }} {{ verses.author }}</div>
+                        {% else %}
+              <div class="all__block-white">{{ verses.name }} {{ verses.pubdate }} {{ verses.author }}</div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+
+            </div>
+            <div class="all__symblos">
+              <div class="all__symbols-arrows">
+                <div class="all-arrow">
+                  <img class="arrow" src="{% static 'img/arrow.png' %}" alt="" />
+                </div>
+                <div class="all-arrow">
+                  <img
+                    class="arrow arrow__deg"
+                    src="{% static 'img/arrow.png' %}"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="popular__circles">
+                <div class="popular__circle-big"></div>
+                <div class="popular__circle"></div>
+                <div class="popular__circle"></div>
+                <div class="popular__circle"></div>
+                <div class="popular__circle"></div>
+                <div class="popular__circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        const verseSearchUrl = '{% url "all_verses_search" %}';
+    </script>
+    <script src="{% static 'js/verse_search_input.js' %}"></script>
+
+ <script>
+        function getCookie(name) {
+            let cookieValue = null;
+
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                console.log(cookies);
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+
+            return cookieValue;
+        };
+
+
+    </script>
+
+{% endblock %}
