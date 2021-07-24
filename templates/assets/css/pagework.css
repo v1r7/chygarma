@@ -5,17 +5,89 @@
   font-family: "Underdog", cursive;
 }
 
+a {
+  text-decoration: none;
+}
+
 .container {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
 }
 
-.header {
-  width: 1600px;
+.nav {
+  background-color: #ddab5f;
+}
+
+.items {
   width: 100%;
   height: 100px;
-  background: #ddab5f;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo__img {
+  width: 69px;
+  height: 69px;
+}
+
+button {
+  transition: all 0.1s;
+}
+
+a:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+a:active {
+  color: #41311b;
+}
+button:hover {
+  background-color: #f6b758;
+}
+
+.burger__menu {
+  display: none;
+}
+
+.burger__line {
+  width: 68px;
+  height: 11.47px;
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.burger__line-center {
+  margin: 8px 0;
+}
+
+.link {
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
+}
+
+.signup {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
+  padding: 16px 50px;
+  border: 3px solid #f5e2cf;
+  border-radius: 10px;
+  background-color: #ddab5f;
+}
+
+.checkin {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
+  padding: 16px 24px;
+  border: 3px solid #f5e2cf;
+  border-radius: 10px;
+  background-color: #f5e2cf;
 }
 
 .title__text {
@@ -23,10 +95,15 @@
   font-size: 64px;
   font-weight: normal;
   margin-bottom: 50px;
+  text-align: left;
 }
 
 .title__span {
   font-size: 48px;
+}
+
+.poems {
+  padding: 20px 0;
 }
 
 .poem {
@@ -34,13 +111,16 @@
   display: flex;
   justify-content: space-between;
 }
-.poem__texts {
-  width: 30%;
-}
+
 .poem__text-title {
   font-weight: bold;
   font-size: 26px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-left: 120px;
+}
+
+pre {
+  margin-left: 0;
 }
 
 .poem__text {
@@ -53,7 +133,8 @@
 }
 
 .poem__block {
-  width: 700px;
+  max-width: 700px;
+  width: 100%;
   height: 576px;
   background: #c4c4c4;
   font-size: 48px;
@@ -63,6 +144,18 @@
 .poem__block-p {
   margin-top: 35%;
   margin-left: 30%;
+}
+
+.poem__like-icon,
+.poem__like-img {
+  width: 53px;
+  height: 49px;
+}
+
+.poem__like-icon:active {
+  width: 53px;
+  height: 49px;
+  opacity: 0.5;
 }
 
 .poem__like {
@@ -81,11 +174,42 @@
   align-items: center;
 }
 
+.comments__title-inp {
+  max-width: 590px;
+  width: 100%;
+  height: 68px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 100%;
+  color: #868686;
+  margin-left: 40px;
+  margin-right: 30px;
+  outline: none;
+}
+
+.comments__title-btn {
+  max-width: 244px;
+  width: 100%;
+  height: 68px;
+  background: #ddab5f;
+  border: 3px solid #000000;
+  border-radius: 20px;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 85.5%;
+  text-align: center;
+  color: #000000;
+}
+
 .comments {
   margin-top: 100px;
 }
-.comments__title {
-  font-size: 48px;
+.comments__title-h2 {
+  font-size: 44px;
 }
 .comments__span {
   font-weight: normal;
@@ -96,6 +220,7 @@
   margin-left: 50px;
 }
 .comments__blocks {
+  position: relative;
   margin-top: 60px;
   display: flex;
 }
@@ -120,6 +245,32 @@
   margin-left: 66px;
 }
 
+.slick-arrow {
+  top: 105%;
+  position: absolute;
+  background: none;
+  border: none;
+  font-size: 0;
+}
+
+.slick-prev {
+  left: 40%;
+  width: 80px;
+  height: 60px;
+  background-image: url(/images/right-arrow.svg);
+  background-repeat: no-repeat;
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+.slick-next {
+  width: 60px;
+  height: 60px;
+  right: 42%;
+  background-image: url(/images/right-arrow.svg);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
 .comments__arrows {
   margin-top: 20px;
   display: flex;
@@ -137,9 +288,387 @@
 }
 
 .footer {
-    margin-top: 150px;
-  width: 1600px;
+  margin-top: 130px;
   width: 100%;
-  height: 484px;
   background: #ddab5f;
+  padding: 39px 0;
+}
+
+.footer__links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__link {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__link-a {
+  margin-bottom: 26px;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+}
+
+.footer__link-a:last-child {
+  margin-right: 0;
+}
+
+.socials {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 80px;
+}
+
+.social__link {
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+  text-decoration: none;
+}
+
+.social__icons {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+.cocial__icon {
+  margin-top: 20px;
+}
+
+.social__icon-img {
+  max-width: 38px;
+  width: 100%;
+  height: 38px;
+  opacity: 0.5;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.social__icon-img:hover {
+  opacity: 1;
+}
+
+.social__icon-img:last-child {
+  margin-right: 0;
+}
+
+.slick-arrow:hover {
+  background-color:white ;
+}
+
+@media screen and (max-width: 769px) {
+  /* стили планшет - ipad Mini*/
+  /* ____________________________________header_________________________________________ */
+
+  .items {
+    display: flex;
+    justify-content: start;
+    padding: 0 30px;
+  }
+
+  .sign {
+    margin-left: 165px;
+    margin-right: 30px;
+  }
+  .burger__menu {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .link {
+    display: none;
+  }
+
+  /* _____________________________________________________________________________ */
+
+  .title__text {
+    font-size: 48px;
+    margin-left: 30px;
+  }
+
+  .title__span {
+    font-size: 36px;
+    margin-left: 30px;
+  }
+
+  .poem {
+    margin-top: 40px;
+    flex-direction: column-reverse;
+    display: flex;
+  }
+  .poem__texts {
+    padding: -30px;
+  }
+
+  .poem__text-title {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 26px;
+    margin-top: 10px;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .poem__block {
+    border-radius: 10px;
+    margin-left: 30px;
+    margin-bottom: 30px;
+  }
+
+  .poem__like {
+    margin-left: 30px;
+  }
+
+  .comments__title {
+    margin-left: 30px;
+    display: contents;
+    flex-direction: column;
+  }
+  .comments__title-inp {
+    margin-left: 30px;
+    margin-bottom: 20px;
+  }
+
+  .comments__title-h2 {
+    margin-left: 30px;
+    margin-bottom: 20px;
+  }
+
+  .comments__title-btn {
+    margin-left: 30px;
+    max-width: 200px;
+    width: 100%;
+    height: 58px;
+    font-size: 18px;
+  }
+
+  .slick-prev {
+    left: 36%;
+  }
+  .slick-next {
+    right: 39%;
+  }
+
+  /* ____________________________________footer_________________________________________ */
+
+  .footer__link {
+    max-width: 264px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer__links {
+    padding: 0 30px;
+    flex-wrap: wrap;
+  }
+
+  .socials {
+    padding: 0 30px;
+  }
+  .social__icons {
+    margin-right: 30px;
+  }
+
+  /* _____________________________________________________________________________ */
+}
+
+@media screen and (max-width: 320px) {
+  /* iPhone SE/5 ---- одаптивка */
+
+  /* __________________header__________________________ */
+  .items {
+    height: 70px;
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+
+  .logo__img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo__img-main {
+    width: 36px;
+    height: 36px;
+  }
+
+  .sign {
+    display: none;
+  }
+
+  /* __________________________________________________ */
+
+  .section {
+    padding: 0 12px;
+  }
+
+  .title__text {
+    margin-top: 17px;
+    margin-left: 0;
+    font-size: 24px;
+  }
+
+  .title__span {
+    margin-left: 0;
+    font-size: 20px;
+  }
+
+  .poem__text-title {
+    font-size: 14px;
+  }
+
+  .poem__block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 296px;
+    width: 100%;
+    height: 243px;
+    margin-left: 0;
+  }
+
+  .poem__block-p {
+    margin-top: 0;
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  .poem {
+    margin-top: 20px;
+  }
+
+  .poem__text {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .poem__like {
+    margin-top: 20px;
+    margin-left: 0;
+  }
+
+  .poem__like-icon,
+  .poem__like-img {
+    width: 35px;
+    height: 30px;
+  }
+
+  .poem__like-quantity {
+    margin-left: 10px;
+    font-size: 18px;
+  }
+
+  .poem__like-icon:active {
+    width: 35px;
+    height: 30px;
+  }
+
+  .poem__texts {
+    padding: 0;
+  }
+
+  .comments {
+    padding: 0 12px;
+    margin-top: 60px;
+  }
+
+  .comments__title-h2 {
+    font-size: 24px;
+    margin-left: 0;
+  }
+
+  .comments__title-inp {
+    max-width: 260px;
+    width: 100%;
+    height: 42px;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 8px;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  .comments__title-btn {
+    margin-left: 0;
+    font-size: 14px;
+    max-width: 131px;
+    width: 100%;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid #000000;
+  }
+
+  .comments__block {
+    padding: 10px;
+    max-width: 148px;
+    width: 100%;
+    height: 137px;
+  }
+
+  .commets__block-p,
+  .comments__block-span {
+    font-size: 10px;
+    margin-left: 0;
+  }
+
+  .slick-prev {
+    left: 26%;
+  }
+  .slick-next {
+    right: 26%;
+  }
+
+  .slick-arrow {
+    width: 50px;
+    height: 50px;
+  }
+
+   /* ____________________________footer____________________________ */
+
+   .footer {
+    margin-top: 70px;
+  }
+
+
+  .footer__links {
+    padding: 0 12px;
+  }
+  .footer__link-a {
+    margin-bottom: 6px;
+    line-height: 12px;
+    font-size: 10px;
+  }
+
+  .socials {
+    margin-top: 35px;
+    padding: 0 12px;
+    align-items: flex-end;
+  }
+  .social__link {
+    font-size: 12px;
+    width: 100%;
+    line-height: 16px;
+  }
+
+  .social__icons {
+    margin-top: 5px;
+    margin-right: 0;
+  }
+
+  .social__icon-img {
+    width: 18px;
+    height: 18px;
+    margin-right: 0;
+  }
 }

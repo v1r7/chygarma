@@ -115,6 +115,7 @@ class Comment(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     verse = models.ForeignKey(Verse, verbose_name="Комментарий к стиху",
                               on_delete=models.CASCADE, null=True)
+    create_at = models.DateField(auto_now_add=True, verbose_name='Дата публикации', null=True)
 
     class Meta:
         verbose_name = 'Коментарий'

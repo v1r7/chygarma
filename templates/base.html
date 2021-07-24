@@ -1,104 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta http-equiv="X-UA-Compatible" content="IE=edge">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <link rel="stylesheet" href="{% static 'header_user.css' %}">#}
-{#    <title>Document</title>#}
-{#</head>#}
-{#<body>#}
-{#    <div class="header_block_user">#}
-{#        <a href="#header" class="logo_black"><img src="{% static 'img/logo.svg' %}" alt="" /></a>#}
-{#        <a href="#header" class="logo_white"><img src="{% static 'img/logo_white.svg' %}" alt="" /></a>#}
-{#        <nav class="navbar">#}
-{#            <a href="#" class="navbar_item">Главная</a>#}
-{#            <a href="#" class="navbar_item">Авторы</a>#}
-{#            <a href="#" class="navbar_item">Произведения</a>#}
-{#            <a href="#" class="navbar_item">Новости</a>#}
-{#        </nav>#}
-{#        <a href="" class="name_user">Имя Фамилия<img src="{% static 'img/img_user.svg' %}" alt=""></span></a>#}
-{#        <div class="burger"><img src="{% static 'img/burger.svg' %}" alt=""></div>#}
-{#    </div>#}
-{#    <br>#}
-{#    <br>#}
-{#    <br>#}
-{##}
-{#    <div class="header_block">#}
-{#        <a href="#header" class="logo_black"><img src="{% static 'img/logo.svg' %}" alt="" /></a>#}
-{#        <a href="#header" class="logo_white"><img src="{% static 'img/logo_white.svg' %}" alt="" /></a>#}
-{#        <nav class="navbar">#}
-{#            <a href="#" class="navbar_item">Главная</a>#}
-{#            <a href="#" class="navbar_item">Авторы</a>#}
-{#            <a href="#" class="navbar_item">Произведения</a>#}
-{#            <a href="#new_sec" class="navbar_item">Новости</a>#}
-{#        </nav>#}
-{#        <a href="authorization.html" class="login_btn">Вход <img src="{% static 'img/Arrow.svg' %}" alt=""></a>#}
-{#        <a href="registration.html" class="registr_btn">Регистрация <img src="{% static 'img/Arrow.svg' %}" alt=""></a>#}
-{#        <div class="burger"><img src="{% static 'img/burger.svg' %}" alt=""></div>#}
-{#    </div>#}
-{#</body>#}
-{#</html>#}
-
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-    {% block css %}{% endblock %}
-    <title>Chygarma</title>
-</head>
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Underdog&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/pagework.css' %}" />
 
-<body>
-    <div class="header_block">
+  </head>
+  <body>
+    <header class="header">
+        <header class="header">
+            <nav class="nav">
+              <div class="container">
+                <div class="items">
+                  <div class="logo__img">
+                    <img class="logo__img-main" href="{% url 'index_page' %}" src="{% static 'img/logo.svg' %}" alt="logo">
+                  </div>
+                  <a href="" class="link">Главная</a>
+                  <a href="./author.html" class="link">Авторы</a>
+                  <a href="./" class="link">Произведения</a>
+                  <a href="" class="link">Новости</a>
+                  <div class="sign">
+                  {% if user.is_authenticated %}
+                      <a href="{% url 'control_panel' %}">{{ user.login }}</a>
+                  <a class="signup" href="{% url 'logout' %}">Выход ></a>
+                  <a class="checkin" href="{% url 'control_panel' %} ">Личный кабинет></a>
+                  {% else %}
+                  <a class="signup" href="{% url 'login' %}">Вход ></a>
+                  <a class="checkin" href="{% url 'register' %}">Регистрация ></a>
+                  {% endif %}
+                  </div>
+                  <!-- Burger Menu -->
+                </div>
+              </div>
+            </nav>
+          </header>
+    </header>
 
-        <a href="{% url 'index_page' %}"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
-
-        {% if user.is_authenticated %}
-                        <span>{{ user.login }}</span>
-                        <a href="{% url 'logout' %}"
-                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
-                            Выход
-                        </a>
-                        <a href="{% url 'control_panel' %} "
-                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
-                            Личный кабинет
-                        </a>
-                    {% else %}
-                        <a href="{% url 'login' %}"
-                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
-                            Вход
-                        </a>
-                         <a href="{% url 'register' %}"
-                           style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
-                            Регистрация
-                        </a>
-                    {% endif %}
  {% block content %}
 
  {% endblock %}
-    <footer>
-        <nav class="navbar">
-            <a href="#" class="navbar__item">О нас</a>
-            <a href="#" class="navbar__item">Авторы</a>
-            <a href="politics.html" class="navbar__item">Политика конфиденциальности</a>
-            <a href="index_compositions.html" class="navbar__item">Произведения</a>
-            <a href="#" class="navbar__item">Новости</a>
-            <a href="#" class="navbar__item">Социальные сети</a>
-        </nav>
-    </footer>
-</body>
+   <footer class="footer">
+        <div class="container">
+            <div class="footer__links">
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">Авторы</a>
+                    <a href="#" class="footer__link-a">Популярные авторы</a>
+                    <a href="#" class="footer__link-a">Все авторы</a>
+                    <a href="#" class="footer__link-a">Стать автором</a>
+                </div>
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">Произведения</a>
+                    <a href="#" class="footer__link-a">Популярные произведения </a>
+                    <a href="#" class="footer__link-a">Все произведения </a>
+                    <a href="#" class="footer__link-a">Поделиться произведением</a>
+                </div>
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">Новости</a>
+                    <a href="#" class="footer__link-a">Статистика</a>
+                    <a href="#" class="footer__link-a">Выбор редакции</a>
+                    <a href="#" class="footer__link-a">История кыргызкой литературы</a>
+                </div>
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">О нас</a>
+                    <a href="#" class="footer__link-a">Войти</a>
+                    <a href="#" class="footer__link-a">Зарегистрироваться</a>
+                </div>
+            </div>
+            <div class="socials">
+                <span class="social__link">Политика конфиденциальности</span>
+                <div class="social__icons">
+                    <a href="" class="social__link">Социальные сети</a>
+                    <div class="cocial__icon">
+                        <img class="social__icon-img" src="{% static 'img/instagram.png' %}" alt="Instagram">
+                        <img class="social__icon-img" src="{% static 'img/twitter.png' %}" alt="Twitter">
+                        <img class="social__icon-img" src="{% static 'img/youtube.png' %}" alt="YouTube">
+                </div>
+            </div>
+        </div>
+   </footer>
 
-</html>
+
+
+
 
 
 <!-- <header class="header">
     <div class="header__title header__title_red"></div>
     <div class="header__about-us_red"></div>
 </header> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 <script>
         function getCookie(name) {
             let cookieValue = null;

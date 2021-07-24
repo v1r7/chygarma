@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
-from apps.verse.models import Verse, Author, AuthorProfile, Category
+from apps.verse.models import Verse, Author, AuthorProfile, Category, Comment
 
 
 class IndexView(TemplateView):
@@ -119,3 +119,34 @@ class AllVersesListView(ListView):
         context["all_verses"] = Verse.objects.all()[:7]
 
         return context
+
+class VerseDetailView(DetailView):
+    template_name = 'pages/verse_detail_view.html'
+    model = Verse
+
+    def get_context_data(self, **kwargs):
+        context = super(VerseDetailView, self).get_context_data(**kwargs)
+        context['verse_detail_view'] = Verse.objects.first()
+
+        verse = context.get('verse')
+        # context['first_picture'] = product.get_first_picture
+        context['comments'] = Comment.objects.filter(
+            verse__id=verse.id
+        ).order_by('-create_at')
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode())
+        verse = Verse.objects.filter(id=data.get('product_id')).first()
+
+        if verse is None:
+            return JsonResponse({'detail': 'error'}, status=404)
+
+        Comment.objects.create(
+            author=request.user,
+            verse=verse,
+            text=data.get('comment'),
+        )
+
+        return JsonResponse({'detail': 'success'}, status=201)
