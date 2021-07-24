@@ -31,7 +31,7 @@ sendVerseBtn.onclick = (event) => {
       content: contentInput.value,
       description: descriptionInput.value,
       tag: tagsInput.value,
-
+      author_id: AuthorId,
     };
 
     fetch(verseCreateUrl, {

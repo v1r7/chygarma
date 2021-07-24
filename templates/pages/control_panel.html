@@ -71,23 +71,20 @@
         </div>
 
         <div class="creation__blocks">
+
           <div class="creation__title">
             <div class="creation__title-top">
               <p class="creation__top-big">Название произведения</p>
               <p class="creation__top-text">Жанр и дата публикации</p>
               <span class="creation__top-span">{{ user.first_name }} {{ user.last_name }}</span>
             </div>
-
-            <div class="creation__title-grey" href="">{{ user.verse.name }} {{ user.verse.author }}</div>
-            <div class="creation__title-white"></div>
-                {% get_verses as verses %}
-          {% for verse in verses %}
-            <div class="creation__title-grey"></div>
-              {% endfor %}
-            <div class="creation__title-white"></div>
-            <div class="creation__title-grey"></div>
-            <div class="creation__title-white"></div>
-            <div class="creation__title-grey"></div>
+            {% for verse in verses %}
+              {% if forloop.counter|divisibleby:2 %}
+                <div class="creation__title-grey">{{ verse.name }}</div>
+              {% else %}
+                <div class="creation__title-white">{{ verse.name }}</div>
+              {% endif %}
+            {% endfor %}
           </div>
           <div class="reviews__symbol">
             <div class="reviews__arrows">
@@ -160,7 +157,8 @@
     {% endblock %}
 
 <script>
-    const verseCreateUrl = '{% url "control_panel" %}'
+    const verseCreateUrl = '{% url "control_panel" %}';
+    const AuthorId = {{ author_id }};
 </script>
 
 <script src="{% static 'js/control_panel.js' %}"></script>

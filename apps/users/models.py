@@ -5,6 +5,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+
+from apps.verse.models import Author
 from utils.upload import upload_instance
 
 
@@ -45,10 +47,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='Почта', max_length=60, unique=True)
     date_joined = models.DateTimeField(verbose_name='Дата/время регистрации',
                                        auto_now_add=True)
-    avatar = models.ImageField(verbose_name='Аватар',
-                                upload_to=upload_instance)
-    background_picture = models.ImageField(verbose_name='Задний фон',
-                                upload_to=upload_instance)
     warning = models.BooleanField(default=False, verbose_name='предупреждение')
     login = models.CharField(verbose_name="Логин", max_length=60, unique=True)
     last_login = models.DateTimeField(verbose_name='Последний вход',
@@ -62,7 +60,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-
     class Meta:
         verbose_name = 'Пользователь/автор'
         verbose_name_plural = 'Пользователи/авторы'
@@ -75,3 +72,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        Author.objects.create(author=instance)
