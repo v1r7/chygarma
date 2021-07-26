@@ -98,15 +98,16 @@ class LogoutView(LoginRequiredMixin, View):
 class CreateListVerseView(ListView):
     template_name = 'pages/control_panel.html'
     model = Verse
+    context_object_name = 'verses'
+    paginate_by = 7
 
     def get_context_data(self, *args, **kwargs):
         context = super(CreateListVerseView, self).get_context_data(*args, **kwargs)
         context['author_id'] = Author.objects.filter(author=self.request.user).first().id
-        context['verses'] = Verse.objects.filter(author__author_id=context.get('author_id'))[:7]
+        context['verses'] = Verse.objects.filter(author__author_id=context.get('author_id'))
         context['category_list'] = Category.objects.all()
 
         return context
-
 
 
     def post(self, request, *args, **kwargs):

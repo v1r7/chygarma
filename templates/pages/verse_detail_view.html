@@ -40,18 +40,23 @@
                 <div class="comments__title">
                     <h2 class="comments__title-h2">Комментарии</h2>
                     <input placeholder="Напишите коменнтарий" type="text" name="" id="comment_input_id" class="comments__title-inp">
-                    <p id="comment_error_id" style="color: darkred">Введите текст комментария</p>
+                    <p id="comment_error_id" style="color: darkred; display: none">Введите текст комментария</p>
                     <button class="comments__title-btn" id="comment_btn_id">Опубликовать</button>
                 </div>
                 {% endif %}
 
+
                 <div class="comments__blocks">
-                    {% for comment in comments %}
+                {% for comment in comments %}
                     <div class="comments__block">
                         <p class="commets__block-p">“{{ comment.content}}”</p>
                         <span class="comments__block-span">{{ comment.author}}</span>
+
                     </div>
                     {% endfor %}
+                </div>
+
+
 {##}
 {#                    <div class="comments__block">#}
 {#                        <p class="commets__block-p">“Мне очень нравятся его работы он меня вдохнавляет и он классный и смелый”</p>#}
@@ -63,7 +68,7 @@
 {#                    <div class="comments__block"></div>#}
 {#                    <div class="comments__block"></div>#}
 {#                    <div class="comments__block"></div>#}
-                </div>
+
 
             </div>
         </div>

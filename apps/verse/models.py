@@ -97,7 +97,7 @@ class Verse(models.Model):
                              on_delete=models.SET_NULL,
                              null=True)
     picture = models.ImageField(verbose_name='Изображение',
-                              upload_to=upload_instance, blank=True, null=True )
+                              upload_to=upload_instance, blank=True, null=True)
     pubdate = models.DateField(auto_now_add=True, verbose_name='Дата публикации')
     recommend = models.BooleanField(default=False, verbose_name='рекомендация произведения')
 
@@ -112,7 +112,7 @@ class Verse(models.Model):
 class Comment(models.Model):
     """ Модель Коментарий"""
     content = models.CharField(verbose_name='Коментарий', max_length=444)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(AuthorProfile, on_delete=models.CASCADE, related_name='comments_author')
     verse = models.ForeignKey(Verse, verbose_name="Комментарий к стиху",
                               on_delete=models.CASCADE, null=True)
     create_at = models.DateField(auto_now_add=True, verbose_name='Дата публикации', null=True)
@@ -137,5 +137,21 @@ class Like(models.Model):
 
     def __str__(self):
         return self.like
+
+class News(models.Model):
+    """Модель новостей"""
+    title = models.CharField(max_length=100, verbose_name='Заголовок')
+    content = models.TextField(max_length=333, verbose_name='Содержание')
+    picture = models.ImageField(verbose_name='Изображение',
+                              upload_to=upload_instance, blank=True, null=True)
+    main_page_filter = models.BooleanField(default=False, verbose_name='Рекомендация новости')
+
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+
+    def __str__(self):
+        return self.title
+
 
 

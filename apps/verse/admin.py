@@ -1,8 +1,16 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from apps.verse.models import Category, Verse, Tag, Comment, Author, AuthorProfile
+from apps.verse.models import Category, Verse, Tag, Comment, Author, AuthorProfile, News
 
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ['title', 'content', 'get_image', 'main_page_filter']
+
+    def get_image(self, obj):
+        if obj.picture:
+            return mark_safe(f'<img src={obj.picture.url} width="100" height="100"')
+        return '-'
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

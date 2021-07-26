@@ -1,10 +1,13 @@
 import json
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
-from apps.verse.models import Verse, Author, AuthorProfile, Category, Comment
+from apps.verse.models import Verse, Author, AuthorProfile, Category, Comment, News
 
+
+class headerView(TemplateView):
+    template_name = 'pages/base1.html'
 
 class IndexView(TemplateView):
     template_name = 'pages/index_page.html'
@@ -13,7 +16,7 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['verse_list'] = Verse.objects.filter(recommend=True).order_by("id")[:5]
         context['author_banner'] = Author.objects.order_by("id")[:3]
-
+        context['news'] = News.objects.filter(main_page_filter=True)[:3]
         return context
 
 
@@ -26,7 +29,6 @@ class VerseListView(ListView):
         context["verses"] = Verse.objects.all()
 
         return context
-
 
 class AuthorDetailView(DetailView):
     template_name = 'pages/author_profile_list.html'
@@ -47,12 +49,11 @@ class AuthorDetailView(DetailView):
 class AuthorlistView(ListView):
     template_name = 'pages/author_list.html'
     model = Author
-    context_object_name = 'author_detail'
-
+    paginate_by = 7
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['authors_list'] = Author.objects.all()
+        context['authors_list'] = AuthorProfile.objects.all()
 
         return context
 
@@ -90,7 +91,6 @@ class AsyncAllVerseSearchListView(ListView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
-        print(data)
         all_verses_list = self.queryset.filter(name__icontains=data.get('value'))
 
         context = {'all_verses_list': all_verses_list}
@@ -100,23 +100,16 @@ class AsyncAllVerseSearchListView(ListView):
 
         return JsonResponse({'html': html}, status=200)
 
-# class CategoryListView(ListView):
-#     queryset = Category.objects.all()
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(CategoryListView).get_context_data(**kwargs)
-#         context['category_list'] = Category.objects.all()
-#         print(context)
-#
-#         return context
+
 
 class AllVersesListView(ListView):
     template_name = 'pages/works.html'
     model = Verse
+    paginate_by = 7
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["all_verses"] = Verse.objects.all()[:7]
+        context["all_verses"] = Verse.objects.all()
 
         return context
 
@@ -127,7 +120,6 @@ class VerseDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(VerseDetailView, self).get_context_data(**kwargs)
         context['verse_detail_view'] = Verse.objects.first()
-
         verse = context.get('verse')
         # context['first_picture'] = product.get_first_picture
         context['comments'] = Comment.objects.filter(
@@ -138,7 +130,7 @@ class VerseDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
-        verse = Verse.objects.filter(id=data.get('product_id')).first()
+        verse = Verse.objects.filter(id=data.get('verse_id')).first()
 
         if verse is None:
             return JsonResponse({'detail': 'error'}, status=404)

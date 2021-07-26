@@ -1,6 +1,10 @@
 const commentInput = document.getElementById('comment_input_id');
 const sendCommentBtn = document.getElementById('comment_btn_id');
 const commentErrorBLock = document.getElementById('comment_error_id');
+console.log(commentInput);
+
+console.log(sendCommentBtn);
+console.log(commentErrorBLock);
 
 sendCommentBtn.onclick = (event) => {
   if (commentInput.value.length > 3) {

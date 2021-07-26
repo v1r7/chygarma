@@ -89,17 +89,29 @@
                 {% if forloop.counter|divisibleby:2 %}
                     <div class="mini_block light_block">
                     <img src="{% static 'img/crown.svg' %}" alt="" class="crown">
-                   <div class="mini_block_heading" href="{% url 'verse_detail_view' pk=verse.pk %}">{{ verse.name }} </div>
-                    <div class="mini_block_author">{{ verse.author }}</div>
+                   <a href="{% url 'verse_detail_view' pk=verse.pk %}">
+                       <div class="mini_block_heading">{{ verse.name }}</div>
+                   </a>
+
+{#                    <a href="{% url 'verse_detail_view' pk=author.pk %}">#}
+                        <div class="mini_block_author">{{ verse.author }}</div>
+{#                    </a>#}
                     <div class="mini_block_type">{{ verse.category }}</div>
+
                 </div>
 
                 {% else %}
                 <div class="mini_block">
                     <img src="{% static 'img/crown.svg' %}" alt="" class="crown">
-                   <div class="mini_block_heading" href="{% url 'verse_detail_view' pk=verse.pk %}">{{ verse.name }} </div>
-                    <div class="mini_block_author">{{ verse.author }}</div>
+                   <a href="{% url 'verse_detail_view' pk=verse.pk %}">
+
+                   </a>
+                       <div class="mini_block_heading" >{{ verse.name }} </div>
+{#                    <a href="{% url 'verse_detail_view' pk=verse_author__author.pk %}">#}
+                        <div class="mini_block_author">{{ verse.author }}</div>
+{#                    </a>#}
                     <div class="mini_block_type">{{ verse.category }}</div>
+
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -156,33 +168,19 @@
         <div class="news">
             <div class="news_heading">Новости и события</div>
             <div class="gray_blocks ">
+                {% for news in news %}
                 <div class="gray_block ">
-                    <div class="illustration">Иллюстрации новостей</div>
-                </div>
-                <div class="gray_block white_block">
-                    <div class="title">Заголовок</div>
-                    <div class="text">Я больше не могу писать, <br> Я не испытываю боли, <br> В моей теперешней юдоли <br> Любить – совсем не есть страдать… <br> Но значит жить, но значит ждать, <br> Но значит чувствовать и верить, <br> И каждый день стоять у двери, <br>                        Ценить мгновения и время, <br> Касаться, гладить, обнимать… <br> Я потерял тот черный сплин, <br> Что дарит траурная муза, <br> Крестом на спину, тяжким грузом, <br> За дар «писать» лишая сил...
-
+                    <div class="illustration">
+                         <img src="{{ news.picture.url }}" alt="">
                     </div>
                 </div>
                 <div class="gray_block white_block">
-                    <div class="title">Заголовок</div>
-                    <div class="text">Я больше не могу писать, <br> Я не испытываю боли, <br> В моей теперешней юдоли <br> Любить – совсем не есть страдать… <br> Но значит жить, но значит ждать, <br> Но значит чувствовать и верить, <br> И каждый день стоять у двери, <br>                        Ценить мгновения и время, <br> Касаться, гладить, обнимать… <br> Я потерял тот черный сплин, <br> Что дарит траурная муза, <br> Крестом на спину, тяжким грузом, <br> За дар «писать» лишая сил...
+                    <div class="title">{{ news.title }}</div>
+                    <div class="text">{{ news.content }}</div>
+                </div>
+                {% endfor %}
 
-                    </div>
-                </div>
-                <div class="gray_block ">
-                    <div class="illustration"></div>
-                </div>
-                <div class="gray_block ">
-                    <div class="illustration"></div>
-                </div>
-                <div class="gray_block white_block">
-                    <div class="title">Заголовок</div>
-                    <div class="text">Я больше не могу писать, <br> Я не испытываю боли, <br> В моей теперешней юдоли <br> Любить – совсем не есть страдать… <br> Но значит жить, но значит ждать, <br> Но значит чувствовать и верить, <br> И каждый день стоять у двери, <br>                        Ценить мгновения и время, <br> Касаться, гладить, обнимать… <br> Я потерял тот черный сплин, <br> Что дарит траурная муза, <br> Крестом на спину, тяжким грузом, <br> За дар «писать» лишая сил...
 
-                    </div>
-                </div>
             </div>
         </div>
     </section>
