@@ -63,5 +63,6 @@
     <script>
         const registerUrl = "{% url 'register' %}";
         const token = getCookie(name='csrftoken');
+        console.log(getCookie);
     </script>
     <script src="{% static 'js/auth.js' %}"></script>

@@ -1,19 +1,23 @@
 import json
+
+from django.db.models import Count
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
-from apps.verse.models import Verse, Author
+from apps.verse.models import Verse, Author, AuthorProfile
 
 
 class IndexView(TemplateView):
     template_name = 'pages/index_page.html'
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs,):
         context = super().get_context_data(**kwargs)
-        context['verse_list'] = Verse.objects.filter(recommend=True)
-        context['author_banner'] = Author.objects.all()
+        context['verse_list'] = Verse.objects.filter(recommend=True).order_by("id")[:5]
+        context['author_banner'] = Author.objects.order_by("id")[:3]
 
         return context
+
+
 
 class VerseListView(ListView):
     model = Verse
@@ -25,32 +29,34 @@ class VerseListView(ListView):
 
         return context
 
+
 class AuthorDetailView(DetailView):
     template_name = 'pages/author_profile_list.html'
     model = Verse
     context_object_name = 'author_detail'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(AuthorDetailView, self).get_context_data(**kwargs)
-    #     verse = context.get('verse')
-    #     context['first_picture'] = verse.get_first_picture
-    #
-    #     return context
-    #
+    def get_context_data(self, **kwargs):
+        context = super(AuthorDetailView, self).get_context_data(**kwargs)
+        context['author_profile'] = AuthorProfile.objects.first()
+        author_profile = AuthorProfile.objects.first()
+        context['readers_count'] = author_profile.readers.count()
+        aa = AuthorProfile.objects.filter(author=True)
+        print(aa)
+
+        return context
+
 
 class AuthorlistView(ListView):
     template_name = 'pages/author_list.html'
-    model = Verse
+    model = Author
     context_object_name = 'author_detail'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['authors_list'] = Author.objects.all()
 
         return context
-
-
-
 
 
 class AsyncVerseSearchListView(ListView):

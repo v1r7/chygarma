@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from apps.verse.models import Category, Verse, Tag, Comment, Author
+from apps.verse.models import Category, Verse, Tag, Comment, Author, AuthorProfile
 
 
 @admin.register(Category)
@@ -28,6 +28,10 @@ class VerseAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ['id', 'author']
 
+@admin.register(AuthorProfile)
+class AuthorProfileAdmin(admin.ModelAdmin):
+    list_display = ['id']
+    filter_horizontal = ['readers']
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):

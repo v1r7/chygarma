@@ -8,6 +8,5 @@ urlpatterns = [
     path('control_panel/', VerseListView.as_view(), name="verses_list"),
     path('author_detail/<int:pk>', AuthorDetailView.as_view(), name="author_detail"),
     path('authors_list/', AuthorlistView.as_view(), name="author_list"),
-    path('search_list/', AsyncVerseSearchListView.as_view(), name='search_list')
-
+    path('search_list/', AsyncVerseSearchListView.as_view(), name='search_list'),
 ]

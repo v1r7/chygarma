@@ -20,7 +20,7 @@
 
             <div class="container"></div>
       <div class="author__bg" style="background-image: url({% static 'img/author__bg.svg' %});">
-        <h1 class="author__name">саякбай каралаев</h1>
+        <h1 class="author__name">{{ author_profile }}</h1>
       </div>
       <div class="author__status">
         <div class="author__circle"></div>
@@ -38,7 +38,7 @@
           </div>
           <div class="author__status-texts">
             <p class="author__status-text">читатели</p>
-            <span class="author__status-quantity">427 895</span>
+            <span class="author__status-quantity">{{ readers_count }}</span>
           </div>
         </div>
         <button class="author__status-btn">Читать</button>

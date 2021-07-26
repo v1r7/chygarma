@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
-from apps.verse.models import Author
+from apps.verse.models import Author, AuthorProfile
 from utils.upload import upload_instance
 
 

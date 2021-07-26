@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from utils.upload import upload_instance
 
@@ -43,6 +45,12 @@ class Author(models.Model):
         return self.author.__str__()
 
 
+@receiver(post_save, sender=Author)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        AuthorProfile.objects.create(author=instance)
+
+
 class AuthorProfile(models.Model):
     """Модель профиля автора"""
     author = models.OneToOneField(Author, on_delete=models.SET_NULL, null=True)
@@ -51,28 +59,21 @@ class AuthorProfile(models.Model):
     background_picture = models.ImageField(verbose_name='Задний фон',
                                            upload_to=upload_instance,
                                            blank=True, null=True)
-
-
-
-class Follower(models.Model):
-    """Модель Читателей"""
-    value = models.SmallIntegerField("Количеcтво фоловеров", null=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.value
+    readers = models.ManyToManyField(to=Author, related_name='readers')
 
     class Meta:
-        verbose_name = 'Читатель'
-        verbose_name_plural = 'Читатели'
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'
+
+    def __str__(self):
+        return f'Profile {self.author.__str__()}'
+
 
 
 class Verse(models.Model):
     """Модель Стихов"""
     name = models.CharField(verbose_name='Название', max_length=255)
     content = models.TextField(verbose_name='Содержание')
-    views = models.ForeignKey(Follower, verbose_name='Читатели',
-                              on_delete=models.SET_NULL, blank=True, null=True)
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL,
                                  null=True)
     author = models.ForeignKey(Author, related_name='author_name', verbose_name='Автор',
