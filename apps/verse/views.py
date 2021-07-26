@@ -40,8 +40,8 @@ class AuthorDetailView(DetailView):
         context['author_profile'] = AuthorProfile.objects.first()
         author_profile = AuthorProfile.objects.first()
         context['readers_count'] = author_profile.readers.count()
-        aa = AuthorProfile.objects.filter(author=True)
-        print(aa)
+        context['profile_name'] = AuthorProfile.objects.first()
+        print(context)
 
         return context
 

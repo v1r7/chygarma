@@ -66,7 +66,7 @@ class AuthorProfile(models.Model):
         verbose_name_plural = 'Профили'
 
     def __str__(self):
-        return f'Profile {self.author.__str__()}'
+        return f'{self.author.__str__()}'
 
 
 
