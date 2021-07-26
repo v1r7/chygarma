@@ -3,7 +3,7 @@ from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
-from apps.verse.models import Verse, Author, AuthorProfile, Category, Comment, News
+from apps.verse.models import Verse, Author, AuthorProfile, Category, Comment, News, Like
 
 
 class headerView(TemplateView):
@@ -41,6 +41,7 @@ class AuthorDetailView(DetailView):
         author_profile = AuthorProfile.objects.first()
         context['readers_count'] = author_profile.readers.count()
         context['profile_name'] = AuthorProfile.objects.first()
+        context['comments_list'] = Comment.objects.all().order_by('-create_at')
 
 
         return context
@@ -53,7 +54,7 @@ class AuthorlistView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['authors_list'] = AuthorProfile.objects.all()
+        context['authors_list'] = AuthorProfile.objects.all().order_by('author__author')
 
         return context
 
@@ -131,6 +132,12 @@ class VerseDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
         verse = Verse.objects.filter(id=data.get('verse_id')).first()
+        print(data)
+
+        Like.objects.update_or_create(
+            like=data.get('like')
+        )
+
 
         if verse is None:
             return JsonResponse({'detail': 'error'}, status=404)
@@ -142,3 +149,4 @@ class VerseDetailView(DetailView):
         )
 
         return JsonResponse({'detail': 'success'}, status=201)
+

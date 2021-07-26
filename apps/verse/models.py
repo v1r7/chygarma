@@ -127,9 +127,8 @@ class Comment(models.Model):
 
 class Like(models.Model):
     """Модель Лайков"""
-    like = models.IntegerField(default=0)
-    verse = models.ForeignKey(Verse, verbose_name="Стих", on_delete=models.SET(-1))
-
+    like = models.BooleanField(default=True, verbose_name='Лайки')
+    verse = models.ForeignKey(Verse, verbose_name="Стих", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Лайк'
@@ -137,6 +136,7 @@ class Like(models.Model):
 
     def __str__(self):
         return self.like
+
 
 class News(models.Model):
     """Модель новостей"""

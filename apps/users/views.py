@@ -49,6 +49,7 @@ class RegisterView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(self.request.body.decode())
+        print(data)
 
         # if not data.get('pass1') == data.get('pass2'):
         #     return JsonResponse(
@@ -98,13 +99,13 @@ class LogoutView(LoginRequiredMixin, View):
 class CreateListVerseView(ListView):
     template_name = 'pages/control_panel.html'
     model = Verse
-    context_object_name = 'verses'
     paginate_by = 7
+    context_object_name = 'verses'
 
     def get_context_data(self, *args, **kwargs):
         context = super(CreateListVerseView, self).get_context_data(*args, **kwargs)
         context['author_id'] = Author.objects.filter(author=self.request.user).first().id
-        context['verses'] = Verse.objects.filter(author__author_id=context.get('author_id'))
+        context['verses'] = Verse.objects.filter(author__author_id=context.get('author_id')).order_by('-pubdate')
         context['category_list'] = Category.objects.all()
 
         return context
@@ -112,6 +113,7 @@ class CreateListVerseView(ListView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
+        print(data)
         author = Author.objects.filter(id=data.get('author_id')).first()
         Verse.objects.create(
             name=data.get('name'),
@@ -120,7 +122,8 @@ class CreateListVerseView(ListView):
             tags=data.get('tags'),
             category=data.get('category'),
             # picture=data.get('picture'),
-            description=data.get('description')
+            description=data.get('description'),
+
         )
 
         return JsonResponse({'detail': 'success'}, status=201)

@@ -103,10 +103,9 @@
                 {% else %}
                 <div class="mini_block">
                     <img src="{% static 'img/crown.svg' %}" alt="" class="crown">
-                   <a href="{% url 'verse_detail_view' pk=verse.pk %}">
-
-                   </a>
-                       <div class="mini_block_heading" >{{ verse.name }} </div>
+                       <a href="{% url 'verse_detail_view' pk=verse.pk %}">
+                           <div class="mini_block_heading" >{{ verse.name }}</div>
+                       </a>
 {#                    <a href="{% url 'verse_detail_view' pk=verse_author__author.pk %}">#}
                         <div class="mini_block_author">{{ verse.author }}</div>
 {#                    </a>#}

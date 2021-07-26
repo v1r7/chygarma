@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from apps.verse.models import Category, Verse, Tag, Comment, Author, AuthorProfile, News
+from apps.verse.models import Category, Verse, Tag, Comment, Author, AuthorProfile, News, Like
+
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
@@ -19,7 +20,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Verse)
 class VerseAdmin(admin.ModelAdmin):
-    list_display = ['name', 'author', 'content', 'tags', 'category', 'description', 'recommend', 'get_image']
+    list_display = ['name', 'author', 'content', 'tags', 'category', 'description', 'recommend', 'get_image', 'like']
 
 
     list_filter = ['pubdate', ]
@@ -49,3 +50,6 @@ class TagAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['content',  'verse']
 
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
+    list_display=['like', 'verse']

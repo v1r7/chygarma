@@ -77,7 +77,7 @@
               <span class="creation__top-span">{{ user.first_name }} {{ user.last_name }}</span>
             </div>
           <div id="search_input_block_id">
-              {% for verse in page_obj %}
+              {% for verse in verses %}
               {% if forloop.counter|divisibleby:2 %}
                   <a href="{% url 'verse_detail_view' pk=verse.pk %}">
                       <div class="creation__title-grey" href="{% url 'verse_detail_view' pk=verse.id %}">{{ verse.name }} {{ verse.category }} {{ verse.pubdate }} {{ verse.author }}</div>
@@ -92,9 +92,9 @@
           </div>
           <div class="reviews__symbol">
             <div class="reviews__arrows">
-                {% if page_obj.has_previous %}
+                {% if verses.has_previous %}
               <div class="reviews__arrows-left">
-                  <a href="?page={{ page_obj.previous_page_number }}"><img class="arrow" src="{% static '/img/arrow.png' %}" alt="Солго" /></a>
+                  <a href="?page={{ verses.previous_page_number }}"><img class="arrow" src="{% static '/img/arrow.png' %}" alt="Солго" /></a>
               </div>
                 {% else %}
                 <div class="reviews__arrows-left disabled">
@@ -102,9 +102,9 @@
               </div>
             {% endif %}
 
-            {% if page_obj.has_next %}
+            {% if verses.has_next %}
               <div class="reviews__arrows-right">
-                  <a href="?page={{ page_obj.next_page_number }}"><img
+                  <a href="?page={{ verses.next_page_number }}"><img
                   class="arrow arrow__right"
                   src="{% static '/img/arrow.png' %}"
                   alt="Оңго"
@@ -117,23 +117,27 @@
                   src="{% static '/img/arrow.png' %}"
                   alt="Оңго"
                 /></a>
-
-            {% endif %}
             </div>
+            {% endif %}
 
-          {% if page_obj.has_previous %}
+
+
             <div class="reviews__circles">
-              <a href="?page={{ page_obj.previous_page_number }}"><div class="reviews__circle"></div></a>
+            {% if verses.has_previous %}
+              <a href="?page={{ verses.previous_page_number }}">
+                  <div class="reviews__circle"></div>
+              </a>
                 {% else %}
 
                 {% endif %}
           <a href="">
-              <div class="reviews__circle-big active"></div>{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
-          {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}"><div class="reviews__circle"></div></a>
+              <div class="reviews__circle-big active"></div>{{ verses.number }} из {{ verses.paginator.num_pages }}</a>
+          {% if verses.has_next %}
+          <a href="?page={{ verses.next_page_number }}"><div class="reviews__circle"></div></a>
           {% else %}
 
           {% endif %}
+
             </div>
           </div>
         </div>
