@@ -1,9 +1,12 @@
 import json
+
 from django.db.models import Q, Count
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, TemplateView
-from apps.verse.models import Verse, Author, AuthorProfile, Category, Comment, News, Like
+
+from apps.verse.models import Verse, Author, AuthorProfile, Comment, News
 
 
 class headerView(TemplateView):
@@ -16,8 +19,11 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs,):
         context = super().get_context_data(**kwargs)
         context['verse_list'] = Verse.objects.filter(recommend=True).order_by("id")[:5]
-        context['author_banner'] = Author.objects.order_by("id")[:3]
+        context['author_banner'] = Author.objects.all()[:3]
         context['news'] = News.objects.filter(main_page_filter=True)[:3]
+        context['verse_count'] = Verse.objects.all().annotate(answer_count=Count('name'))
+        context['author_count'] = Author.objects.filter(author_name__category__verse__isnull=False).annotate\
+            (answer_count=Count('author'))
         return context
 
 
@@ -45,21 +51,36 @@ class AuthorDetailView(DetailView):
         author_profile = AuthorProfile.objects.first()
         context['readers_count'] = author_profile.readers.count()
         context['profile_name'] = AuthorProfile.objects.first()
+        context['verse_count'] = Verse.objects.all().annotate(answer_count=Count('name'))
         context['comments_list'] = Comment.objects.all().order_by('-create_at')
 
         return context
 
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode())
+        user = self.request.user
+        instance = AuthorProfile.objects.get(id=data.get('author_id'))
+        instance.readers.add(*[user.id])
+        instance.save()
+
+        return redirect("/")
 
 class AuthorlistView(ListView):
     template_name = 'pages/author_list.html'
     model = Author
     paginate_by = 7
+    context_object_name = 'list_of_authors'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['authors_list'] = AuthorProfile.objects.all().order_by('author__author')
+    def get_queryset(self):
+        _qs = super(AuthorlistView, self).get_queryset()
+        return _qs.filter(author_name__category__verse__isnull=False)
 
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['authors_list'] = Author.objects.filter(author_name__category__verse__isnull=False)
+    #         # .order_by('author__author')
+    #
+    #     return context
 
 
 class AsyncVerseSearchListView(ListView):
@@ -105,7 +126,6 @@ class AsyncAllVerseSearchListView(ListView):
         return JsonResponse({'html': html}, status=200)
 
 
-
 class AllVersesListView(ListView):
     template_name = 'pages/works.html'
     model = Verse
@@ -125,7 +145,6 @@ class VerseDetailView(DetailView):
         context = super(VerseDetailView, self).get_context_data(**kwargs)
         context['verse_detail_view'] = Verse.objects.first()
         verse = context.get('verse')
-        # context['first_picture'] = product.get_first_picture
         context['comments'] = Comment.objects.filter(
             verse__id=verse.id
         ).order_by('-create_at')
@@ -135,21 +154,34 @@ class VerseDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
         verse = Verse.objects.filter(id=data.get('verse_id')).first()
-        print(data)
-
-        Like.objects.update_or_create(
-            like=data.get('like'),
-        )
-
 
         if verse is None:
             return JsonResponse({'detail': 'error'}, status=404)
 
+        author = Author.objects.filter(author=self.request.user.id).first()
+
+        if author is None:
+            return JsonResponse({'detail': 'error'}, status=404)
+
         Comment.objects.create(
-            author=request.user,
+            author=author,
             verse=verse,
-            text=data.get('comment'),
+            content=data.get('comment'),
         )
 
         return JsonResponse({'detail': 'success'}, status=201)
+
+    def update(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode())
+        user = self.request.user
+        instance = Verse.objects.get(id=data.get('verse_id'))
+        instance.is_liked.add(*[user.id])
+        instance.save()
+
+        return redirect("/")
+
+
+class PoliticsView(TemplateView):
+    template_name = 'pages/politics.html'
+
 

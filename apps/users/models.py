@@ -61,8 +61,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     class Meta:
-        verbose_name = 'Пользователь/автор'
-        verbose_name_plural = 'Пользователи/авторы'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
     @property
     def get_special_first_name_last_name(self):

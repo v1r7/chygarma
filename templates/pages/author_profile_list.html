@@ -19,14 +19,14 @@
     <header class="header">
         <div class="container"></div>
             <div class="author__bg" style="background-image: url({% static 'img/author__bg.svg' %});">
-                <h1 class="author__name">Миха</h1>
+                <h1 class="author__name">{{ author }}</h1>
             </div>
           <div class="author__status">
             <div class="author__circle"></div>
             <div class="author__status-title">
               <div class="author__status-texts">
                 <p class="author__status-text">Произведения</p>
-                <span class="author__status-quantity">274</span>
+                <span class="author__status-quantity">{{ verse_count.all.count }}</span>
               </div>
               <div class="author__status-texts">
                 <p class="author__status-text">
@@ -126,4 +126,5 @@
         const authorDetailUrl = '{% url "author_detail" author.pk %}';
         const authorId = '{{ author.id }}';
     </script>
+    <script src="{% static 'js/author_profile_list.js' %}"></script>
 {% endblock %}

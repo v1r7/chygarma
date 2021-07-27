@@ -3,7 +3,6 @@ import json
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView, ListView
@@ -11,7 +10,6 @@ from django.views.generic import TemplateView, ListView
 from apps.users.forms import LoginForm
 from apps.users.models import User
 from apps.users.services import authenticate, create_user, check_email
-
 from apps.verse.models import Verse, Author, Category
 
 
@@ -33,9 +31,6 @@ class LoginView(TemplateView):
         return JsonResponse({'success_url': reverse('index_page')}, status=200)
 
 
-
-
-
 class RegisterView(TemplateView):
     template_name = 'pages/registration.html'
 
@@ -49,7 +44,6 @@ class RegisterView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(self.request.body.decode())
-        print(data)
 
         # if not data.get('pass1') == data.get('pass2'):
         #     return JsonResponse(
@@ -95,11 +89,10 @@ class LogoutView(LoginRequiredMixin, View):
 
         return HttpResponseRedirect(reverse('index_page'))
 
-
 class CreateListVerseView(ListView):
     template_name = 'pages/control_panel.html'
     model = Verse
-    paginate_by = 2
+    paginate_by = 7
     context_object_name = 'verses'
 
     def get_queryset(self):
@@ -116,9 +109,12 @@ class CreateListVerseView(ListView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
-        print(data)
         author = Author.objects.filter(id=data.get('author_id')).first()
         category = Category.objects.filter(id=data.get('category_id')).first()
+
+        if category is None:
+            return JsonResponse({'detail': 'error'}, status=404)
+
         Verse.objects.create(
             name=data.get('name'),
             content=data.get('content'),
@@ -127,13 +123,9 @@ class CreateListVerseView(ListView):
             category=category,
             # picture=data.get('picture'),
             description=data.get('description'),
-
         )
 
         return JsonResponse({'detail': 'success'}, status=201)
-
-
-
 
 class UsersListView(ListView):
     model = User

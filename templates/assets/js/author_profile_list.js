@@ -1,9 +1,10 @@
-let testBool  = true;
+let testBool  = false;
         function toggle() {
             testBool = testBool  ? false : true;
             console.log(testBool);
+
             let data = {
-                like: testBool,
+                readers: testBool,
                 author_id: authorId,
             };
             fetch(authorDetailUrl, {

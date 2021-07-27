@@ -37,7 +37,7 @@ let testBool  = true;
                 verse_id: verseId,
             };
             fetch(verseDetailUrl, {
-      method: 'POST',
+      method: 'UPDATE',
       headers: {
         'Accept': 'application/json, */*, text/plain',
         'Content-type': 'application/json',

@@ -160,11 +160,9 @@
         <div class="statistic">
             <div class="statistic_heading">Статистика</div>
             <div class="publicated_compositions">Количество опубликованных произведений</div>
-            <div class="publicated_compositions-number">14 568</div>
+            <div class="publicated_compositions-number">{{ verse_count.all.count }}</div>
             <div class="amount_authors">Количество авторов</div>
-            <div class="amount_authors-number">14 568</div>
-            <div class="publicated_everyday">Ежедневно <br> публикуется</div>
-            <div class="publicated_everyday-number">14 568</div>
+            <div class="amount_authors-number">{{ author_count.all.count }}</div>
         </div>
         <div class="news">
             <div class="news_heading">Новости и события</div>
