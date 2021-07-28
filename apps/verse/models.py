@@ -5,21 +5,22 @@ from django.dispatch import receiver
 
 from utils.upload import upload_instance
 
-category = (
-    ('1', 'о любви'),
-    ('2', 'о войне'),
-    ('1', 'о природе'),
-    ('2', 'для детей'),
-    ('1', 'о Родине'),
-    ('2', 'о жизни'),
-    ('1', 'о смерти'),
-    ('2', 'о себе'),
-    )
+# category = (
+#     ('1', 'о любви'),
+#     ('2', 'о войне'),
+#     ('3', 'о природе'),
+#     ('4', 'для детей'),
+#     ('1', 'о Родине'),
+#     ('2', 'о жизни'),
+#     ('1', 'о смерти'),
+#     ('2', 'о себе'),
+#     )
 
 class Category(models.Model):
     """Модель Категорий"""
-    name = models.CharField(max_length=60, blank=True, choices=category,
+    name = models.CharField(max_length=60, blank=True,
                              verbose_name="Категории")
+    # , choices = category,
 
     class Meta:
         verbose_name = 'Категория'

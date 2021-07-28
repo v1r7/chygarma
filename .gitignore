@@ -1,4 +1,4 @@
-.env
+core/.env
 .idea
 ### Django ###
 *.log
@@ -118,7 +118,7 @@ celerybeat.pid
 
 # Environments
 # .env
-.env/
+core/.env/
 .venv/
 env/
 venv/
