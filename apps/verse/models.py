@@ -72,20 +72,6 @@ class AuthorProfile(models.Model):
         return f'{self.author.__str__()}'
 
 
-
-# class Like(models.Model):
-#     """Модель Лайков"""
-#     like = models.BooleanField(default=True, verbose_name='Лайки')
-#     verse = models.ForeignKey(Author, verbose_name="Стих", on_delete=models.CASCADE)
-#
-#     class Meta:
-#         verbose_name = 'Лайк'
-#         verbose_name_plural = 'Лайки'
-#
-#     def __str__(self):
-#         return self.like
-
-
 class Verse(models.Model):
     """Модель Стихов"""
     name = models.CharField(verbose_name='Название', max_length=255)
@@ -112,6 +98,11 @@ class Verse(models.Model):
 
     def __str__(self):
         return self.name
+
+    def verse_picture_or_default(self, default_path="/media/uploads/verse/default/default.png"):
+        if self.picture:
+            return self.picture
+        return default_path
 
 
 class Comment(models.Model):

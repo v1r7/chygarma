@@ -31,13 +31,12 @@ sendCommentBtn.onclick = (event) => {
 let testBool  = true;
         function toggle() {
             testBool = testBool  ? false : true;
-            console.log(testBool);
             let data = {
                 like: testBool,
                 verse_id: verseId,
             };
             fetch(verseDetailUrl, {
-      method: 'UPDATE',
+      method: 'PATCH',
       headers: {
         'Accept': 'application/json, */*, text/plain',
         'Content-type': 'application/json',

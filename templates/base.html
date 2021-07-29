@@ -21,17 +21,17 @@
               <div class="container">
                 <div class="items">
                   <div class="logo__img">
-                    <img class="logo__img-main" href="{% url 'index_page' %}" src="{% static 'img/logo.svg' %}" alt="logo">
+                      <a href="{% url 'index_page' %}"><img class="logo__img-main" href="" src="{% static 'img/logo.svg' %}" alt="logo"></a>
                   </div>
-                  <a href="" class="link">Главная</a>
-                  <a href="./author.html" class="link">Авторы</a>
-                  <a href="./" class="link">Произведения</a>
+                  <a href="{% url 'index_page' %}" class="link">Главная</a>
+                  <a href="{% url 'author_list' %}" class="link">Авторы</a>
+                  <a href="{% url 'all_verses_list' %}" class="link">Произведения</a>
                   <a href="" class="link">Новости</a>
-                  <div class="sign">
+
                   {% if user.is_authenticated %}
 {#                      <a href="{% url 'control_panel' %}">{{ user.login }}</a>#}
                   <a class="signup" href="{% url 'logout' %}">Выход ></a>
-                  <a class="checkin" href="{% url 'control_panel' %} ">Личный кабинет></a>
+                  <a class="checkin" href="{% url 'control_panel' %} ">Личный кабинет> </a>
                   {% else %}
                   <a class="signup" href="{% url 'login' %}">Вход ></a>
                   <a class="checkin" href="{% url 'register' %}">Регистрация ></a>
@@ -39,7 +39,7 @@
                   </div>
                   <!-- Burger Menu -->
                 </div>
-              </div>
+                  </div>
             </nav>
           </header>
     </header>

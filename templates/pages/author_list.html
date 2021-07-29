@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 
-
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -71,22 +70,7 @@
             </div>
             <div class="popular__symbol">
                 <a href="#" class="popular__allauthor">Все авторы</a>
-                <div class="popular__arrows">
-                    <div class="popular__arrow">
-                        <img class="arrow" src="{% static 'img/arrow.png' %}" alt="">
-                    </div>
-                    <div class="popular__arrow">
-                        <img class="arrow arrow__deg" src="{% static 'img/arrow.png' %}" alt="">
-                    </div>
-                </div>
-                <div class="popular__circles">
-                    <div class="popular__circle-big"></div>
-                    <div class="popular__circle"></div>
-                    <div class="popular__circle"></div>
-                    <div class="popular__circle"></div>
-                    <div class="popular__circle"></div>
-                    <div class="popular__circle"></div>
-                </div>
+
             </div>
           </div>
         </div>
@@ -112,13 +96,13 @@
                     <div id="author_search_input_block_id">
                         {% for authors in page_obj %}
                             {% if forloop.counter|divisibleby:2 %}
-{#                               <a href="{% url 'author_detail' pk=author.pk %}">#}
+{#                               <a href="{% url 'author_detail' pk=author.author.pk %}">#}
                                     <div class="all__block-grey">{{ authors }}</div>
-{#                                </a>#}
+                                </a>
                                     {% else %}
-{#                               <a href="{% url 'author_detail' pk=author.pk %}">#}
+{#                               <a href="{% url 'author_detail' pk=author.author.pk %}">#}
                                     <div class="all__block-white">{{ authors }}</div>
-{#                               </a>#}
+                               </a>
                             {% endif %}
                         {% endfor %}
                     </div>

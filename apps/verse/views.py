@@ -18,12 +18,14 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs,):
         context = super().get_context_data(**kwargs)
+        context['popular_verses'] = Verse.objects.all().order_by('is_liked')[:5]
         context['verse_list'] = Verse.objects.filter(recommend=True).order_by("id")[:5]
-        context['author_banner'] = Author.objects.all()[:3]
+        context['author_banner'] = AuthorProfile.objects.all().order_by('readers')[:3]
         context['news'] = News.objects.filter(main_page_filter=True)[:3]
         context['verse_count'] = Verse.objects.all().annotate(answer_count=Count('name'))
         context['author_count'] = Author.objects.filter(author_name__category__verse__isnull=False).annotate\
             (answer_count=Count('author'))
+
         return context
 
 
@@ -41,29 +43,50 @@ class VerseListView(ListView):
 class AuthorDetailView(DetailView):
     template_name = 'pages/author_profile_list.html'
     model = Author
-    slug_url_kwarg = None
-    slug_field = None
-    context_object_name = 'author'
+    paginate_by = 7
+    # context_object_name = 'authors_pag'
 
-    def get_context_data(self, **kwargs):
+
+    # def get_queryset(self):
+    #     context = super(AuthorDetailView, self).get_queryset()
+    #     author = context.get('author')
+    #     _qs = Verse.objects.filter(author_id=author.id).\
+    #         order_by('pubdate')
+    #     return _qs
+
+    def get_context_data(self, **kwargs, ):
         context = super(AuthorDetailView, self).get_context_data(**kwargs)
-        context['author_profile'] = AuthorProfile.objects.first()
-        author_profile = AuthorProfile.objects.first()
-        context['readers_count'] = author_profile.readers.count()
-        context['profile_name'] = AuthorProfile.objects.first()
-        context['verse_count'] = Verse.objects.all().annotate(answer_count=Count('name'))
-        context['comments_list'] = Comment.objects.all().order_by('-create_at')
+        author = context.get('author')
+        context['author'] = author
+        context['detail_author_verses'] = Verse.objects.filter(author_id=author.id).\
+            order_by('pubdate')
+        context['verse_count'] = Verse.objects.filter(author_id=author.id).\
+            annotate(answer_count=Count('name'))
+        context['readers_count'] = AuthorProfile.objects.filter(author_id=author.id).\
+            annotate(answer_count=Count('readers'))
+        context['like_count'] = Verse.objects.filter(author_id=author.id).\
+            annotate(answer_count=Count('is_liked'))
+
+
+
+        # context['author_verses'] = Verse.objects.all()
+        # context['author_profile'] = AuthorProfile.objects.first()
+        # author_profile = AuthorProfile.objects.first()
+        # context[] = author_profile.readers.count()
+        # context['profile_name'] = AuthorProfile.objects.first()
+        #
+        # context['comments_list'] = Comment.objects.all().order_by('-create_at')
 
         return context
 
-    def post(self, request, *args, **kwargs):
-        data = json.loads(request.body.decode())
-        user = self.request.user
-        instance = AuthorProfile.objects.get(id=data.get('author_id'))
-        instance.readers.add(*[user.id])
-        instance.save()
-
-        return redirect("/")
+    # def post(self, request, *args, **kwargs):
+    #     data = json.loads(request.body.decode())
+    #     user = self.request.user
+    #     instance = AuthorProfile.objects.get(id=data.get('author_id'))
+    #     instance.readers.add(*[user.id])
+    #     instance.save()
+    #
+    #     return redirect("/")
 
 class AuthorlistView(ListView):
     template_name = 'pages/author_list.html'
@@ -73,14 +96,13 @@ class AuthorlistView(ListView):
 
     def get_queryset(self):
         _qs = super(AuthorlistView, self).get_queryset()
-        return _qs.filter(author_name__category__verse__isnull=False)
+        return _qs.all()
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['authors_list'] = Author.objects.filter(author_name__category__verse__isnull=False)
-    #         # .order_by('author__author')
-    #
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['authors_list'] = Author.objects.all().order_by('author')
+
+        return context
 
 
 class AsyncVerseSearchListView(ListView):
@@ -117,7 +139,6 @@ class AsyncAllVerseSearchListView(ListView):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
         all_verses_list = self.queryset.filter(name__icontains=data.get('value'))
-
         context = {'all_verses_list': all_verses_list}
         html = render_to_string(template_name='partials/verse_search_all.html',
                                 context=context,
@@ -148,6 +169,8 @@ class VerseDetailView(DetailView):
         context['comments'] = Comment.objects.filter(
             verse__id=verse.id
         ).order_by('-create_at')
+        # context['verse_likes'] = Verse.objects.filter(verse__id=verse.id).annotate(like_count=Count('is_liked'))
+        # print(context)
 
         return context
 
@@ -171,14 +194,15 @@ class VerseDetailView(DetailView):
 
         return JsonResponse({'detail': 'success'}, status=201)
 
-    def update(self, request, *args, **kwargs):
-        data = json.loads(request.body.decode())
-        user = self.request.user
-        instance = Verse.objects.get(id=data.get('verse_id'))
-        instance.is_liked.add(*[user.id])
-        instance.save()
+    def patch(self, request, *args, **kwargs):
+        if request.method == "PATCH":
+            data = json.loads(request.body.decode())
+            user = self.request.user
+            instance = Verse.objects.get(id=data.get('verse_id'))
+            instance.is_liked.add(*[user.id])
+            instance.save()
 
-        return redirect("/")
+            return JsonResponse({'detail': 'success'}, status=201)
 
 
 class PoliticsView(TemplateView):

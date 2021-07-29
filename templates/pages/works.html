@@ -61,9 +61,13 @@
                 <div id="verse_search_input_block_id">
                     {% for verses in page_obj %}
                         {% if forloop.counter|divisibleby:2 %}
-              <div class="all__block-grey">{{ verses.name }} {{ verses.pubdate }} {{ verses.author }}</div>
+                            <a href="{% url 'verse_detail_view' pk=verses.pk %}">
+                                <div class="all__block-grey">{{ verses.name }} {{ verses.pubdate }} {{ verses.author }}</div>
+                            </a>
                         {% else %}
-              <div class="all__block-white">{{ verses.name }} {{ verses.pubdate }} {{ verses.author }}</div>
+                            <a href="{% url 'verse_detail_view' pk=verses.pk %}">
+                                <div class="all__block-white">{{ verses.name }} {{ verses.pubdate }} {{ verses.author }}</div>
+                            </a>
                         {% endif %}
                     {% endfor %}
                     </div>
@@ -138,30 +142,8 @@
 {% block js %}
 
     <script>
-        const verseSearchUrl = '{% url "all_verses_search" %}';
+        const allVerseSearchUrl = '{% url "all_verses_search" %}';
     </script>
     <script src="{% static 'js/verse_search_input.js' %}"></script>
-
- <script>
-        function getCookie(name) {
-            let cookieValue = null;
-
-            if (document.cookie && document.cookie !== '') {
-                let cookies = document.cookie.split(';');
-                console.log(cookies);
-                for (let i = 0; i < cookies.length; i++) {
-                    let cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-
-            return cookieValue;
-        };
-
-
-    </script>
 
 {% endblock %}

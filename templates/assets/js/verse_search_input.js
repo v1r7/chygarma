@@ -9,12 +9,11 @@ searchInput.onkeyup = (event) => {
     const data = {value: event.currentTarget.value};
     console.log(data);
 
-    fetch(verseSearchUrl, {
+    fetch(allVerseSearchUrl, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json, */*, text/plain',
         'Content-type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken'),
+        'Accept': 'application/json',
       },
       body: JSON.stringify(data)
     })

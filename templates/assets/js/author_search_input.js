@@ -11,9 +11,7 @@ searchInput.onkeyup = (event) => {
     fetch(authorSearchUrl, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json, */*, text/plain',
         'Content-type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken'),
       },
       body: JSON.stringify(data)
     })

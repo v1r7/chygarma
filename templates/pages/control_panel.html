@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
   <head>
@@ -15,7 +16,6 @@
   </head>
   <body>
     <header class="header">
-      <nav class="nav"></nav>
       <div class="container"></div>
       <div class="author__bg">
         <div class="author__dowland">
@@ -127,13 +127,13 @@
               <a href="?page={{ page_obj.previous_page_number }}">
                   <div class="reviews__circle"></div>
               </a>
-                {% else %}
+            {% else %}
 
-                {% endif %}
-          <a href="">
-              <div class="reviews__circle-big active"></div>{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+                <a href="">
+                    <div class="reviews__circle-big active"></div>{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
           {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}"><div class="reviews__circle"></div></a>
+            <a href="?page={{ page_obj.next_page_number }}"><div class="reviews__circle"></div></a>
           {% else %}
 
           {% endif %}

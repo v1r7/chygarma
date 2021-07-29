@@ -12,48 +12,38 @@
     </header>
     <section class="popular_composition container">
         <div class="blocks">
-            <div class="block">
+        <div class="block">
                 <div class="about_composition">
                     <div class="heading_composition">Название произведения</div>
                     <div class="data_composition">Жанр и дата публикации</div>
                 </div>
                 <div class="author">Автор</div>
             </div>
-            <div class="block">
-                <div class="about_composition">
-                    <div class="heading_composition"></div>
-                    <div class="data_composition"></div>
+            {% for verse in popular_verses %}
+                {% if forloop.counter|divisibleby:2 %}
+                    <div class="block">
+                        <div class="about_composition">
+                            <a href="{% url 'verse_detail_view' pk=verse.pk %}"><div class="heading_composition">{{ verse.name }}</div></a>
+                            <div class="data_composition">{{ verse.category }} {{ verse.pubdate }}</div>
+                        </div>
+                        <a href="{% url 'author_detail' pk=verse.author.pk %}">
+                            <div class="author">{{ verse.author }}</div>
+                        </a>
+                    </div>
+             {% else %}
+                <div class="block">
+                    <div class="about_composition">
+                        <a href="{% url 'verse_detail_view' pk=verse.pk %}">
+                            <div class="heading_composition">{{ verse.name }}</div>
+                        </a>
+                        <div class="data_composition">{{ verse.category }} {{ verse.pubdate }}</div>
+                    </div>
+                    <a href="{% url 'author_detail' pk=verse.author.pk %}">
+                        <div class="author">{{ verse.author }}</div>
+                    </a>
                 </div>
-                <div class="author"></div>
-            </div>
-            <div class="block">
-                <div class="about_composition">
-                    <div class="heading_composition"></div>
-                    <div class="data_composition"></div>
-                </div>
-                <div class="author"></div>
-            </div>
-            <div class="block">
-                <div class="about_composition">
-                    <div class="heading_composition"></div>
-                    <div class="data_composition"></div>
-                </div>
-                <div class="author"></div>
-            </div>
-            <div class="block">
-                <div class="about_composition">
-                    <div class="heading_composition"></div>
-                    <div class="data_composition"></div>
-                </div>
-                <div class="author"></div>
-            </div>
-            <div class="block">
-                <div class="about_composition">
-                    <div class="heading_composition"></div>
-                    <div class="data_composition"></div>
-                </div>
-                <div class="author"></div>
-            </div>
+            {% endif %}
+            {% endfor %}
         </div>
         <div class="texts_composition">
             <div class="composition_head">Популярные произведения</div>

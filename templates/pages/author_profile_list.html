@@ -1,125 +1,138 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+  <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Author profile</title>
-    <link rel="stylesheet" href="{% static 'css/desktop.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/visitor.css' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Underdog&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <header class="header">
-        <div class="container"></div>
-            <div class="author__bg" style="background-image: url({% static 'img/author__bg.svg' %});">
-                <h1 class="author__name">{{ author }}</h1>
-            </div>
-          <div class="author__status">
-            <div class="author__circle"></div>
-            <div class="author__status-title">
-              <div class="author__status-texts">
-                <p class="author__status-text">Произведения</p>
-                <span class="author__status-quantity">{{ verse_count.all.count }}</span>
-              </div>
-              <div class="author__status-texts">
-                <p class="author__status-text">
-                  получено <br />
-                  рецензий
-                </p>
-                <span class="author__status-quantity">81 562</span>
-              </div>
-              <div class="author__status-texts">
-                <p class="author__status-text">читатели</p>
-                <span class="author__status-quantity">{{ readers_count }}</span>
-              </div>
-            </div>
-            <button class="author__status-btn" onclick="toggle()">Читать</button>
-          </div>
-    </header>
-    <section class="reviews container">
-      <div class="reviews__title">коментарии</div>
-      <div class="reviews__all">
-        <div class="reviews__blocks">
-          <div class="reviews__block">
-              {% for comments in comments_list %}
-                {% if forloop.counter|divisibleby:2 %}
-                    <div class="reviews__box">
-                      <div class="reviews__texts">
-                        <p class="reviews__box-offers">{{ comments.content }}
-                        </p>
-                        <span class="reviews__box-author">{{ comment.author }}</span>
-                      </div>
-                    </div>
-                {% else %}
-                      <div class="reviews__box-brown">
-                        <div class="reviews__texts">
-                          <p class="reviews__box-offers">{{ comments.content }}
-                          </p>
-                          <span class="reviews__box-author">{{ comment.author }}</span>
-                        </div>
-                      </div>
-              {% endif %}
-          {% endfor %}
 
+      <div class="container"></div>
+      <div class="author__bg">
+        <div class="author__bg-all">
+            <img src="{% static 'img/moun.jpg' %}" alt="">
+        </div>
+
+        <h1 class="author__name">{{ author }}</h1>
+        <button class="author__btn-name">Читать</button>
+      </div>
+      </div>
+      <div class="author__status">
+        <div class="author__circle"></div>
+        <div class="author__status-title">
+          <div class="author__status-texts">
+            <p class="author__status-text">Произведения</p>
+            <span class="author__status-quantity">{{ verse_count.all.count }}</span>
+          </div>
+          <div class="author__status-texts">
+            <p class="author__status-text">
+              лайки
+            </p>
+            <span class="author__status-quantity">{{ like_count.all.count }}</span>
+          </div>
+          <div class="author__status-texts">
+            <p class="author__status-text">читатели</p>
+            <span class="author__status-quantity">{{ readers_count.all.count }}</span>
           </div>
         </div>
-        <div class="reviews__symbol">
-            <div class="reviews__arrows">
-                {% if page_obj.has_previous %}
-                <div class="reviews__arrows-left">
-                    <a href="?page={{ page_obj.previous_page_number }}">
-                        <img class="arrow" src="{% static '/img/arrow.png' %}" alt="Солго">
-                    </a>
-                </div>
-                {% else %}
-                <div class="reviews__arrows-left disabled">
-                    <a href="?page={{ page_obj.previous_page_number }}">
-                        <img class="arrow" src="{% static '/img/arrow.png' %}" alt="Солго">
-                    </a>
-                </div>
-                {% endif %}
-                {% if page_obj.has_next %}
-                <div class="reviews__arrows-right">
-                    <a href="?page={{ page_obj.next_page_number }}">
-                        <img class="arrow arrow__right" src="{% static '/img/arrow.png' %}" alt="Оңго">
-                    </a>
-                </div>
-                {% else %}
-                <a href="">
-                        <img class="arrow arrow__right" src="{% static '/img/arrow.png' %}" alt="Оңго">
+        <button class="author__status-btn" onclick="toggle()">Читать</button>
+      </div>
+    </header>
+    <section class="creation container">
+      <h1 class="creation__h1">произведения</h1>
+      <div class="creation__serch">
+        <input placeholder="Поиск" type="text" class="creation__inp" />
+        <span class="creation__serch-badge">
+          <img class="search__badge" src="{% static 'img/search__icon.png' %}" alt="search__badge" />
+        </span>
+      </div>
+    <div class="creations__title">
+      <div class="creation__strings">
+        <div class="creation__string-names">
+          <p class="creation__string-title">Название произведения</p>
+          <p class="creation__name-data">Жанр и дата публикации</p>
+          <p class="creation__string-name">Саякбай каралаев</p>
+        </div>
+          {% for verse in detail_author_verses %}
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="creation__string-grey">{{ verse.name }} {{ verse.category }} {{ verse.pubdate }} {{ verse.author}}</div>
+          {% else %}
+                <div class="creation__string-white">{{ verse.name }} {{ verse.category }} {{ verse.pubdate }} {{ verse.author}}</div>
+            {% endif %}
+            {% endfor %}
+      </div>
+      <div class="crearions__arrows">
+        <div class="creation__arrow">
+            {% if page_obj.has_previous %}
+              <div class="creation__left">
+                <a href="?page={{ page_obj.previous_page_number }}">
+                    <img src="{% static 'img/arrow.png' %}" alt="left" class="arrow" />
                 </a>
-            </div>
+              </div>
+            {% else %}
+            <div class="creation__left disabled">
+                <a href="">
+                    <img src="{% static 'img/arrow.png' %}" alt="left" class="arrow" />
+                </a>
+              </div>
+            {% endif %}
+            {% if page_obj.has_next %}
+              <div class="creation__rigth">
+                 <a href="?page={{ page_obj.next_page_number }}"><img
+                  src="{% static 'img/arrow.png' %}"
+                  alt="right"
+                  class="arrow arrow__right"
+                /></a>
+              </div>
+            {% else %}
+                <div class="creation__rigth disabled">
+                         <a href=""><img
+                          src="{% static 'img/arrow.png' %}"
+                          alt="right"
+                          class="arrow arrow__right"
+                        /></a>
+                      </div>
+            {% endif %}
+
+        </div>
+        <div class="creation__circles">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">
+                <div class="creation__circle"></div>
+            </a>
+            {% else %}
+            {% endif %}
+            <a href="">
+                <div class="creation__circle-big">
+                </div>{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">
+                <div class="creation__circle"></div>
+            </a>
+        {% else %}
+
         {% endif %}
 
-            <div class="reviews__circles">
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}">
-                        <div class="reviews__circle"></div>
-                    </a>
-                {% else %}
-                {% endif %}
-                <a href=""><div class="reviews__circle-big active"></div>
-                {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">
-                            <div class="reviews__circle"></div>
-                        </a>
-                    {% else %}
-                {% endif %}
-            </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
   </body>
-</html>
+
+
+
 {% endblock %}
 {% block js %}
     <script>
