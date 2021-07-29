@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
@@ -10,7 +11,7 @@ from django.views.generic import TemplateView, ListView
 from apps.users.forms import LoginForm
 from apps.users.models import User
 from apps.users.services import authenticate, create_user, check_email
-from apps.verse.models import Verse, Author, Category
+from apps.verse.models import Verse, Author, Category, AuthorProfile
 
 
 class LoginView(TemplateView):
@@ -104,6 +105,13 @@ class CreateListVerseView(ListView):
         context = super().get_context_data(*args, **kwargs)
         context['author_id'] = Author.objects.filter(author=self.request.user).first().id
         context['category_list'] = Category.objects.all()
+        author = self.request.user
+        context['verse_count'] = Verse.objects.filter(author_id=author.id). \
+            annotate(answer_count=Count('name'))
+        context['profile_readers'] = AuthorProfile.objects.filter(author_id=author.id)\
+            .annotate(reader_count=Count('readers'))
+        context['likes_count'] = Verse.objects.filter(author_id=author.id)\
+            .annotate(article_count=Count('is_liked')).count()
 
         return context
 

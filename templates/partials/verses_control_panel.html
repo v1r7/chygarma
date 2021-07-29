@@ -1,7 +1,7 @@
 {% for verse in verses %}
               {% if forloop.counter|divisibleby:2 %}
-                <div class="creation__title-grey">{{ verse.name }} {{ verse.pubdate }} {{ verse.author }}</div>
+                <div class="creation__title-grey">{{ verse.name }} {{ verse.category }} {{ verse.pubdate }} {{ verse.author }}</div>
               {% else %}
-                <div class="creation__title-white">{{ verse.name }} {{ verse.pubdate }} {{ verse.author }}</div>
+                <div class="creation__title-white">{{ verse.name }} {{ verse.category }} {{ verse.pubdate }} {{ verse.author }}</div>
               {% endif %}
 {% endfor %}

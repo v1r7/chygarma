@@ -31,7 +31,7 @@
             <div class="poem__like-icon">
                 <img class="poem__like-img" onclick="toggle()" id="poem__like_comment" src="{% static 'img/heart-red(2).svg' %}" alt="like">
             </div>
-            <span class="poem__like-quantity">КОЛИЧЕСТВО ЛАЙКОв</span>
+            <span class="poem__like-quantity">{{ verse_likes.all.count }}</span>
         </div>
       </div>
     </section>

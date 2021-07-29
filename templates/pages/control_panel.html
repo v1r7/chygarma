@@ -1,18 +1,52 @@
-{% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    <!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Underdog&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/pagework.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+  </head>
+  <body>
+    <header class="header">
+        <header class="header">
+            <nav class="nav">
+              <div class="container">
+                <div class="items">
+                  <div class="logo__img">
+                      <a href="{% url 'index_page' %}"><img class="logo__img-main" href="" src="{% static 'img/logo.svg' %}" alt="logo"></a>
+                  </div>
+                  <a href="{% url 'index_page' %}" class="link">Главная</a>
+                  <a href="{% url 'author_list' %}" class="link">Авторы</a>
+                  <a href="{% url 'all_verses_list' %}" class="link">Произведения</a>
+                  <a href="" class="link">Новости</a>
+
+                  {% if user.is_authenticated %}
+                      <a href="{% url 'control_panel' %}">{{ user.login }}</a>
+                  <a class="signup" href="{% url 'logout' %}">Выход ></a>
+                  <a class="checkin" href="{% url 'control_panel' %} ">Личный кабинет> </a>
+                  {% else %}
+                  <a class="signup" href="{% url 'login' %}">Вход ></a>
+                  <a class="checkin" href="{% url 'register' %}">Регистрация ></a>
+                  {% endif %}
+                  </div>
+                  <!-- Burger Menu -->
+                </div>
+                  </div>
+            </nav>
+          </header>
+    </header>
+
     <link rel="stylesheet" href="{% static '/css/styles.css' %}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap"
-      rel="stylesheet"
-    />
+
   </head>
   <body>
     <header class="header">
@@ -40,18 +74,17 @@
         <div class="author__status-title">
           <div class="author__status-texts">
             <p class="author__status-text">Произведения</p>
-            <span class="author__status-quantity">274</span>
+            <span class="author__status-quantity">{{ verse_count.all.count }}</span>
           </div>
           <div class="author__status-texts">
             <p class="author__status-text">
-              получено <br />
-              рецензий
+              Лайки
             </p>
-            <span class="author__status-quantity">81 562</span>
+            <span class="author__status-quantity">{{ likes_count }}</span>
           </div>
           <div class="author__status-texts">
             <p class="author__status-text">читатели</p>
-            <span class="author__status-quantity">427 895</span>
+            <span class="author__status-quantity">{{ profile_readers.all.count }}</span>
           </div>
         </div>
       </div>
@@ -127,13 +160,13 @@
               <a href="?page={{ page_obj.previous_page_number }}">
                   <div class="reviews__circle"></div>
               </a>
-            {% else %}
+                {% else %}
 
-            {% endif %}
-                <a href="">
-                    <div class="reviews__circle-big active"></div>{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+          <a href="">
+              <div class="reviews__circle-big active"></div>{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
           {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}"><div class="reviews__circle"></div></a>
+          <a href="?page={{ page_obj.next_page_number }}"><div class="reviews__circle"></div></a>
           {% else %}
 
           {% endif %}
@@ -191,6 +224,46 @@
     </section>
 
       </body>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__links">
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">Авторы</a>
+                    <a href="#" class="footer__link-a">Популярные авторы</a>
+                    <a href="#" class="footer__link-a">Все авторы</a>
+                    <a href="#" class="footer__link-a">Стать автором</a>
+                </div>
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">Произведения</a>
+                    <a href="#" class="footer__link-a">Популярные произведения </a>
+                    <a href="#" class="footer__link-a">Все произведения </a>
+                    <a href="#" class="footer__link-a">Поделиться произведением</a>
+                </div>
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">Новости</a>
+                    <a href="#" class="footer__link-a">Статистика</a>
+                    <a href="#" class="footer__link-a">Выбор редакции</a>
+                    <a href="#" class="footer__link-a">История кыргызкой литературы</a>
+                </div>
+                <div class="footer__link">
+                    <a href="#" class="footer__link-a">О нас</a>
+                    <a href="#" class="footer__link-a">Войти</a>
+                    <a href="#" class="footer__link-a">Зарегистрироваться</a>
+                </div>
+            </div>
+            <div class="socials">
+                <a href="{% url 'politics' %}"><span class="social__link">Политика конфиденциальности</span></a>
+                <div class="social__icons">
+                    <a href="" class="social__link">Социальные сети</a>
+                    <div class="cocial__icon">
+                        <img class="social__icon-img" src="{% static 'img/instagram.png' %}" alt="Instagram">
+                        <img class="social__icon-img" src="{% static 'img/twitter.png' %}" alt="Twitter">
+                        <img class="social__icon-img" src="{% static 'img/youtube.png' %}" alt="YouTube">
+                </div>
+            </div>
+        </div>
+   </footer>
+
 
     {% endblock %}
 

@@ -36,6 +36,7 @@ class Author(models.Model):
     author = models.OneToOneField(settings.AUTH_USER_MODEL,
                                   on_delete=models.SET_NULL,
                                   related_name='author',
+                                  verbose_name='Юзер/Автор',
                                   null=True)
 
     class Meta:
@@ -55,6 +56,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class AuthorProfile(models.Model):
     """Модель профиля автора"""
     author = models.OneToOneField(Author, on_delete=models.SET_NULL,
+                                  verbose_name='Юзер',
                                   null=True,
                                   related_name='profile_user')
     avatar = models.ImageField(verbose_name='Аватар',

@@ -27,15 +27,17 @@
                 >
                 <span class="block__main-textend">Автор</span>
               </div>
-              <div class="works__block-white"></div>
-              <div class="works__block-grey"></div>
-              <div class="works__block-white"></div>
-            </div>
-            <div class="works__block-bottom">
-              <div class="works__block-white"></div>
-              <div class="works__block-grey"></div>
-              <div class="works__block-white"></div>
-              <div class="works__block-grey"></div>
+              {% for verses in popular_verses_list %}
+                {% if forloop.counter|divisibleby:2 %}
+                     <div class="works__block-white">
+                         {{ verses.name }}{{ verses.category }}{{ verses.name }}{{ verses.pubdate }}
+                     </div>
+                {% else %}
+                    <div class="works__block-grey">
+                        {{ verses.name }}{{ verses.category }}{{ verses.name }}{{ verses.pubdate }}
+                    </div>
+                {% endif %}
+                {% endfor %}
             </div>
           </div>
         </div>

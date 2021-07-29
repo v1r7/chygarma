@@ -67,26 +67,16 @@ class AuthorDetailView(DetailView):
         context['like_count'] = Verse.objects.filter(author_id=author.id).\
             annotate(answer_count=Count('is_liked'))
 
-
-
-        # context['author_verses'] = Verse.objects.all()
-        # context['author_profile'] = AuthorProfile.objects.first()
-        # author_profile = AuthorProfile.objects.first()
-        # context[] = author_profile.readers.count()
-        # context['profile_name'] = AuthorProfile.objects.first()
-        #
-        # context['comments_list'] = Comment.objects.all().order_by('-create_at')
-
         return context
 
-    # def post(self, request, *args, **kwargs):
-    #     data = json.loads(request.body.decode())
-    #     user = self.request.user
-    #     instance = AuthorProfile.objects.get(id=data.get('author_id'))
-    #     instance.readers.add(*[user.id])
-    #     instance.save()
-    #
-    #     return redirect("/")
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode())
+        user = self.request.user
+        instance = AuthorProfile.objects.get(id=data.get('author_id'))
+        instance.readers.add(*[user.id])
+        instance.save()
+
+        return redirect("/")
 
 class AuthorlistView(ListView):
     template_name = 'pages/author_list.html'
@@ -100,7 +90,8 @@ class AuthorlistView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['authors_list'] = Author.objects.all().order_by('author')
+        context['authors_list'] = Author.objects.all().order_by('author')[:7]
+        context['popular_authors'] = Author.objects.all().order_by('readers')[:5]
 
         return context
 
@@ -155,6 +146,7 @@ class AllVersesListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["all_verses"] = Verse.objects.all()
+        context['popular_verses_list'] = Verse.objects.all().order_by('is_liked')[:7]
 
         return context
 
@@ -169,8 +161,9 @@ class VerseDetailView(DetailView):
         context['comments'] = Comment.objects.filter(
             verse__id=verse.id
         ).order_by('-create_at')
-        # context['verse_likes'] = Verse.objects.filter(verse__id=verse.id).annotate(like_count=Count('is_liked'))
-        # print(context)
+
+        context['verse_likes'] = Verse.objects.filter(name=verse).annotate(like_count=Count('is_liked'))
+
 
         return context
 

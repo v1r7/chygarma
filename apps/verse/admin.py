@@ -40,7 +40,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(AuthorProfile)
 class AuthorProfileAdmin(admin.ModelAdmin):
-    list_display = ['id']
+    list_display = ['id', 'author']
     filter_horizontal = ['readers']
 
 @admin.register(Tag)

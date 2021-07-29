@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/visitor.css' %}" />
   <html lang="ru">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Author profile</title>
-    <link rel="stylesheet" href="{% static 'css/visitor.css' %}" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -66,9 +67,13 @@
         </div>
           {% for verse in detail_author_verses %}
             {% if forloop.counter|divisibleby:2 %}
+                <a href="{% url 'verse_detail_view' pk=verse.pk %}">
                 <div class="creation__string-grey">{{ verse.name }} {{ verse.category }} {{ verse.pubdate }} {{ verse.author}}</div>
+                </a>
           {% else %}
+                <a href="{% url 'verse_detail_view' pk=verse.pk %}">
                 <div class="creation__string-white">{{ verse.name }} {{ verse.category }} {{ verse.pubdate }} {{ verse.author}}</div>
+                </a>
             {% endif %}
             {% endfor %}
       </div>

@@ -1,4 +1,4 @@
-
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 <head>
@@ -10,9 +10,6 @@
 </head>
 
 <body>
-    <div class="header_block">
-        <a href="{% url 'index_page' %}"><img src="{% static 'img/logo.svg' %}" alt="" /></a>
-    </div>
     <img src="{% static 'img/header_bg.png' %}" class="bg" alt="">
     <div class="form">
 
@@ -26,7 +23,7 @@
             <div class="forget_password">Нету аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></div>
         </form>
     </div>
-    <footer></footer>
+
 </body>
 
 {% endblock %}

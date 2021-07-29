@@ -52,12 +52,21 @@
                     </p>
                   </div>
                 </div>
-                <div class="popular__box">
-                  <span class="popular__name"
-                    >Затемненное фото профиля на фоне</span
-                  >
-                </div>
-                <div class="popular__box"></div>
+                  {% for authors in popular_authors %}
+                  {% if forloop.counter|divisibleby:2 %}
+                      <a href="{% url 'author_detail' pk=authors.id %}">
+                         <div class="popular__box">
+                             <span class="popular__name">{{ authors }} {{ authors.category }} {{ authors.user.date_joined }}</span>
+                         </div>
+                      </a>
+                  {% else %}
+                      <a href="{% url 'author_detail' pk=authors.id %}">
+                        <div class="popular__box">
+                            <span class="popular__name">{{ authors }} {{ authors.category }} {{ authors.date_joined }}</span>
+                        </div>
+                      </a>
+                  {% endif %}
+                  {% endfor %}
               </div>
               <div class="popular__boxs">
                 <div class="popular__box"></div>
@@ -96,11 +105,11 @@
                     <div id="author_search_input_block_id">
                         {% for authors in page_obj %}
                             {% if forloop.counter|divisibleby:2 %}
-{#                               <a href="{% url 'author_detail' pk=author.author.pk %}">#}
+                             <a href="{% url 'author_detail' pk=authors.id %}">
                                     <div class="all__block-grey">{{ authors }}</div>
                                 </a>
                                     {% else %}
-{#                               <a href="{% url 'author_detail' pk=author.author.pk %}">#}
+                             <a href="{% url 'author_detail' pk=authors.id %}">
                                     <div class="all__block-white">{{ authors }}</div>
                                </a>
                             {% endif %}
