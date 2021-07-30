@@ -1,18 +1,24 @@
-// // js for upload pictures
-// const backgroundBtn = document.getElementById('background_photo');
+'use strict'
+
+// const btncom = document.querySelector('#input__file-com')
+// btncom.onchange = (e) => {
+//     readURLcom(e.target)
+// }
 //
-// backgroundBtn.onclick = () => {
-//   fetch("https://theplantaeapi.herokuapp.com/api/v1/id", {
-//         method: "POST",
-//         headers: {'Content-Type': 'application/json'},
-//         body: JSON.stringify(this.state.queryImage)
-// })
-// .then(res => res.json())
-// .then(data => {
-//     document.location.href = responseJSON['success_url'];
+// let pictureInput = null;
+// function readURLcom(btncom) {
+//     if (btncom.files && btncom.files[0]) {
+//         let old = new FileReader();
+//         old.onload = function (e) {
+//             pictureInput(e.target.result);
+//             console.log(e.target.result);
+//             block.style.background = `url(${e.target.result})`;
+//             block.style.backgroundSize = `cover`;
+//         };
 //
-//      })
-//    }
+//         old.readAsDataURL(btncom.files[0]);
+//     }
+// }
 'use strict'
 
 

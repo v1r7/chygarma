@@ -11,8 +11,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Underdog&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/pagework.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+{#    <link rel="stylesheet" href="{% static 'css/pagework.css' %}" />#}
+{#    <link rel="stylesheet" href="{% static 'css/main.css' %}" />#}
+    <link rel="stylesheet" href="{% static 'css/authordashboard.css' %}" />
 
   </head>
   <body>
@@ -49,46 +50,74 @@
 
   </head>
   <body>
-    <header class="header">
-      <div class="container"></div>
-      <div class="author__bg">
-        <div class="author__dowland">
-          <span class="author__bg-text"
-            >Загрузите фоновое <br />
-            изображение</span
-          >
-          <button class="author__btn-all" id="background_photo">Выбрать</button>
+
+<div id="bg-avatar" class="header__bg-photo">
+        <div class="container">
+          <div class="items__user">
+            <div class="items__texts">
+              <p class="items__text">
+                Загрузите фоновое <br />
+                изображение
+              </p>
+              <input type="file" name="file" id="input__filed" class="input input__file-bg">
+                <label for="input__filed">
+                <span class="input__file-button-text">Выбрать</span>
+                </label>
+            </div>
+            <div class="inp-bg-btn inp-circle-file">
+              <input type="file" name="file" id="input__filed" class="input input__file">
+              <label for="input__filed">
+                <span class="inp-avatar input__file-button-text">
+                   <img class="btn__photo" src="{% static 'img/photo-user.svg' %}" alt="Choose photo">
+                </span>
+              </label>
+            </div>
+            <div class="items__name">
+              <span class="item__name">{{ user.first_name }} {{ user.last_name }}</span>
+            </div>
+          </div>
+          <div id="avatar" class="items__circle">
+            <div class="inp-circle-file">
+                <input type="file" name="file" id="input__file" class="input input__file">
+                <label for="input__file">
+                  <span class="inp-avatar input__file-button-text">
+                     <img class="btn__photo" src="{% static 'img/photo-user.svg' %}" alt="Choose photo">
+                  </span>
+                </label>
+              </div>
+            <div class="items__user">
+              <div class="items__texts user__photo">
+                <p class="items__text items__ucer-text">
+                  Загрузите изображение
+                </p>
+                <input type="file" name="file" id="input__file" class="input-12 input__file">
+                <label for="input__file">
+                <span class="input__file-button-text">Выбрать</span>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
-        <h1 class="author__name">{{ user.first_name }} {{ user.last_name }}</h1>
       </div>
-      <div class="author__status container">
-        <div class="author__circle">
-          <div class="author__dowland author__dowland-incircle">
-            <span class="author__bg-text"
-              >Загрузите фоновое <br />
-              изображение</span
-            >
-            <button class="author__btn-all author__btn">Выбрать</button>
-          </div>
-        </div>
-        <div class="author__status-title">
-          <div class="author__status-texts">
-            <p class="author__status-text">Произведения</p>
-            <span class="author__status-quantity">{{ verse_count.all.count }}</span>
-          </div>
-          <div class="author__status-texts">
-            <p class="author__status-text">
-              Лайки
-            </p>
-            <span class="author__status-quantity">{{ likes_count }}</span>
-          </div>
-          <div class="author__status-texts">
-            <p class="author__status-text">читатели</p>
-            <span class="author__status-quantity">{{ profile_readers.all.count }}</span>
+      <div class="statistics">
+        <div class="container">
+          <div class="statistics__user">
+            <div class="statistic">
+              <p class="statistic__text-num">Произведения</p>
+              <span class="statistic__text-num">{{ verse_count.all.count }}</span>
+            </div>
+            <div class="statistic">
+              <p class="statistic__text-num">Лайки</p>
+              <span class="statistic__text-num">{{ likes_count }}</span>
+            </div>
+            <div class="statistic">
+              <p class="statistic__text-num">читатели</p>
+              <span class="statistic__text-num">{{ profile_readers.all.count }}</span>
+            </div>
           </div>
         </div>
       </div>
-    </header>
+
     <section class="section__creation">
       <div class="container">
         <div class="creation__texts">
@@ -191,12 +220,15 @@
           <div class="publish__block-illust">
             <span class="block-works-text">ИЛЛЮСТРАЦИЯ</span>
             <div class="block-illust">
-              <div class="block-illust-texts">
-                <span class="block-illust-text"
-                  >Загрузите  изображение</span
-                >
-                <button class="block-illust-btn">Выбрать</button>
-              </div>
+              <div class="items__texts block__items-texts">
+              <p class="items__text items__ucer-text">
+                Загрузите изображение
+              </p>
+              <input type="file" name="file" id="input__file-com" class="input input__file-com">
+                <label for="input__file-com">
+                <span class="input__file-button-text">Выбрать</span>
+                </label>
+            </div>
             </div>
             <span class="block-bottom-text">Название</span>
               <input class="block-description-input" id="name_input_id" {{ verse.name }} type="text">
@@ -275,6 +307,8 @@
 
 <script src="{% static 'js/control_panel.js' %}"></script>
 <script src="{% static 'js/search_input.js' %}"></script>
+{#<script src="{% static 'js/burger.js' %}"></script>#}
+<script src="{% static 'js/file.js' %}"></script>
 
  <script>
         function getCookie(name) {

@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+{% block content %}
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Underdog&display=swap"
+      rel="stylesheet"
+    />
+      {% block css %}
+    <link rel="stylesheet" href="{% static 'css/authordashboard.css' %}'" />
+      {% endblock %}
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <div class="container">
+          <div class="burger_menu ">
+            <div class="burger_content">
+                <div class="burger_buttons">
+                    <a href="#" class="login_btn-burger">Вход > </a>
+                    <a href="#" class="registr_btn-burger">Регистрация > </a>
+                </div>
+                <a href="#" class="burger_link">Главная</a>
+                <a href="#" class="burger_link">Авторы</a>
+                <a href="#" class="burger_link">Произведения</a>
+                <a href="#" class="burger_link">Новости</a>
+            </div>
+            <div class="burger_bg burger_close"></div>
+        </div>
+          <div class="items">
+            <div class="logo__img">
+              <img src="{% static 'img/logo_white.svg' %}" alt="" class="logo__img-main logo-white">
+              <img class="logo__img-main" src="{% static 'img/logo.svg' %}" alt="logo" />
+            </div>
+            <a href="" class="link">Главная</a>
+            <a href="./author.html" class="link">Авторы</a>
+            <a href="./works.html" class="link">Произведения</a>
+            <a href="" class="link">Новости</a>
+            <div class="sign">
+              <button class="signup btnup">Вход ></button>
+              <button class="checkin btnup">Регистрация ></button>
+            </div>
+            <div class="burger">
+              <div class="burger__line"></div>
+              <div class="burger__line burger__line-center "></div>
+              <div class="burger__line"></div>
+          </div>
+          </div>
+        </div>
+      </nav>
+      <div id="bg-avatar" class="header__bg-photo">
+        <div class="container">
+          <div class="items__user">
+            <div class="items__texts">
+              <p class="items__text">
+                Загрузите фоновое <br />
+                изображение
+              </p>
+              <input type="file" name="file" id="input__filed" class="input input__file-bg">
+                <label for="input__filed">
+                <span class="input__file-button-text">Выбрать</span>
+                </label>
+            </div>
+            <div class="inp-bg-btn inp-circle-file">
+              <input type="file" name="file" id="input__filed" class="input input__file">
+              <label for="input__filed">
+                <span class="inp-avatar input__file-button-text">
+                   <img class="btn__photo" src="{% static 'img/photo-user.svg' %}" alt="Choose photo">
+                </span>
+              </label>
+            </div>
+            <div class="items__name">
+              <span class="item__name">саякбай каралаев</span>
+            </div>
+          </div>
+          <div id="avatar" class="items__circle">
+            <div class="inp-circle-file">
+                <input type="file" name="file" id="input__file" class="input input__file">
+                <label for="input__file">
+                  <span class="inp-avatar input__file-button-text">
+                     <img class="btn__photo" src="{% static 'img/photo-user.svg' %}" alt="Choose photo">
+                  </span>
+                </label>
+              </div>
+            <div class="items__user">
+              <div class="items__texts user__photo">
+                <p class="items__text items__ucer-text">
+                  Загрузите изображение
+                </p>
+                <input type="file" name="file" id="input__file" class="input-12 input__file">
+                <label for="input__file">
+                <span class="input__file-button-text">Выбрать</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="statistics">
+        <div class="container">
+          <div class="statistics__user">
+            <div class="statistic">
+              <p class="statistic__text-num">Произведения</p>
+              <span class="statistic__text-num">274</span>
+            </div>
+            <div class="statistic">
+              <p class="statistic__text-num">Лайки</p>
+              <span class="statistic__text-num">8562</span>
+            </div>
+            <div class="statistic">
+              <p class="statistic__text-num">читатели</p>
+              <span class="statistic__text-num">427 895</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="creations container">
+      <h1 class="creation__h1">мои произведения</h1>
+      <div class="creation__serch">
+        <input placeholder="Поиск" type="text" class="creation__inp" />
+        <span class="creation__serch-badge">
+          <img class="serch-badge" src="{% static 'img/search__icon.png' %}" alt="search__badge" />
+        </span>
+      </div>
+      <div class="creations__title">
+        <div class="creation__strings">
+          <div class="creation__string-names">
+            <p class="creation__string-title">Название произведения</p>
+            <p class="creation__name-data">Жанр и дата публикации</p>
+            <p class="creation__string-name">Саякбай каралаев</p>
+          </div>
+          <div class="creation__string-grey"></div>
+          <div class="creation__string-white"></div>
+          <div class="creation__string-grey"></div>
+          <div class="creation__string-white"></div>
+          <div class="creation__string-grey"></div>
+          <div class="creation__string-white"></div>
+          <div class="creation__string-grey"></div>
+        </div>
+        <div class="crearions__arrows">
+          <div class="creation__arrow">
+            <div class="creation__left">
+              <img src="{% static 'img/arrow.png' %}" alt="left" class="arrow" />
+            </div>
+            <div class="creation__rigth">
+              <img
+                src="{% static 'img/arrow.png' %}"
+                alt="right"
+                class="arrow arrow__right"
+              />
+            </div>
+          </div>
+          <div class="creation__circles">
+            <div class="creation__circle-big"></div>
+            <div class="creation__circle"></div>
+            <div class="creation__circle"></div>
+            <div class="creation__circle"></div>
+            <div class="creation__circle"></div>
+            <div class="creation__circle"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="publish container">
+      <h2 class="publish__h2">Опубликовать произведение</h2>
+      <div class="publish__blocks">
+        <div class="publish__block-big">
+          <p class="block__text">Произведение</p>
+          <textarea class="block__in-big"></textarea>
+        </div>
+        <div class="publish__btm-o">
+        <div class="publish__block">
+          <div class="publish__block-in">
+            <p class="block__in-none-text">Названия</p>
+            <textarea class="block__in-none"></textarea>
+            </div>
+          <div class="publish__block-in">
+          <p class="block__text">Иллюстрация</p>
+          <div id="com-bg" class="block__in">
+            <div id="publish-btn" class="inp-bg-btn inp-circle-file">
+              <input type="file" name="file" id="input__file-com" class="input input__file">
+              <label for="input__file-com">
+                <span class="inp-avatar input__file-button-text">
+                   <img class="btn__photo" src="{% static 'img/photo-user.svg' %}" alt="Choose photo">
+                </span>
+              </label>
+            </div>
+            <div class="items__texts block__items-texts">
+              <p class="items__text items__ucer-text">
+                Загрузите изображение
+              </p>
+              <input type="file" name="file" id="input__file-com" class="input input__file-com">
+                <label for="input__file-com">
+                <span class="input__file-button-text">Выбрать</span>
+                </label>
+            </div>
+          </div>
+        </div>
+
+        </div>
+        <div class="publish__block block__in-bottom">
+          <div class="publish__block-min">
+          <p class="block__text">Описание</p>
+          <textarea class="block__in block-in"></textarea>
+        </div>
+        <div class="publish__block-min">
+          <p class="block__text block__text-bottom">Хештеги</p>
+          <textarea class="block__in block__in-end"></textarea>
+          <p class="block__text block__text-bottom">Жанр</p>
+          <select class="block__select" name="" id="">
+            <option>Художественное</option>
+            <option>Драма</option>
+            <option>Биография</option>
+          </select>
+          <button class="item__btn block__btn">опубликовать</button>
+        </div>
+      </div>
+    </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container">
+          <div class="footer__links">
+              <div class="footer__link">
+                  <a href="#" class="footer__link-a">Авторы</a>
+                  <a href="#" class="footer__link-a">Популярные авторы</a>
+                  <a href="#" class="footer__link-a">Все авторы</a>
+                  <a href="#" class="footer__link-a">Стать автором</a>
+              </div>
+              <div class="footer__link">
+                  <a href="#" class="footer__link-a">Произведения</a>
+                  <a href="#" class="footer__link-a">Популярные произведения </a>
+                  <a href="#" class="footer__link-a">Все произведения </a>
+                  <a href="#" class="footer__link-a">Поделиться произведением</a>
+              </div>
+              <div class="footer__link footer__link-btm">
+                  <a href="#" class="footer__link-a">Новости</a>
+                  <a href="#" class="footer__link-a">Статистика</a>
+                  <a href="#" class="footer__link-a">Выбор редакции</a>
+                  <a href="#" class="footer__link-a">История кыргызкой литературы</a>
+              </div>
+              <div class="footer__link footer__link-btm">
+                  <a href="#" class="footer__link-a">О нас</a>
+                  <a href="#" class="footer__link-a">Войти</a>
+                  <a href="#" class="footer__link-a">Зарегистрироваться</a>
+              </div>
+          </div>
+          <div class="socials">
+              <span class="social__link">Политика конфиденциальности</span>
+              <div class="social__icons">
+                  <a href="" class="social__link">Социальные сети</a>
+                  <div class="cocial__icon">
+                      <img class="social__icon-img" src="{% static 'img/instagram.png' %}" alt="Instagram">
+                      <img class="social__icon-img" src="{% static 'img/twitter.png' %}" alt="Twitter">
+                      <img class="social__icon-img" src="{% static 'img/youtube.png' %}" alt="YouTube">
+              </div>
+          </div>
+      </div>
+  </footer>
+
+
+
+
+
+  <script src="./burger.js"></script>
+  <script src="./file.js"></script>
+  </body>
+</html>
+{% endblock %}

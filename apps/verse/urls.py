@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.verse.views import IndexView, AuthorDetailView, VerseListView, AuthorlistView, AsyncVerseSearchListView, \
-    AsyncAuthorSearchListView, AllVersesListView, AsyncAllVerseSearchListView, VerseDetailView, PoliticsView
+    AsyncAuthorSearchListView, AllVersesListView, AsyncAllVerseSearchListView, VerseDetailView, PoliticsView, headerView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index_page'),
@@ -14,5 +14,6 @@ urlpatterns = [
     path('author_search_list/', AsyncAuthorSearchListView.as_view(), name='author_search_list'),
     path('all_works/', AllVersesListView.as_view(), name='all_verses_list'),
     path('all_verses_search/', AsyncAllVerseSearchListView.as_view(), name='all_verses_search'),
-    path('politics/', PoliticsView.as_view(), name='politics')
+    path('politics/', PoliticsView.as_view(), name='politics'),
+    path('base1/', headerView.as_view())
 ]
