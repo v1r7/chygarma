@@ -9,6 +9,7 @@ from apps.verse.models import Verse, Author, AuthorProfile, Category, Comment, N
 class headerView(TemplateView):
     template_name = 'pages/base1.html'
 
+
 class IndexView(TemplateView):
     template_name = 'pages/index_page.html'
 
@@ -30,10 +31,13 @@ class VerseListView(ListView):
 
         return context
 
+
 class AuthorDetailView(DetailView):
     template_name = 'pages/author_profile_list.html'
-    model = Verse
-    context_object_name = 'author_detail'
+    model = Author
+    slug_url_kwarg = None
+    slug_field = None
+    context_object_name = 'author'
 
     def get_context_data(self, **kwargs):
         context = super(AuthorDetailView, self).get_context_data(**kwargs)
@@ -42,7 +46,6 @@ class AuthorDetailView(DetailView):
         context['readers_count'] = author_profile.readers.count()
         context['profile_name'] = AuthorProfile.objects.first()
         context['comments_list'] = Comment.objects.all().order_by('-create_at')
-
 
         return context
 
@@ -135,7 +138,7 @@ class VerseDetailView(DetailView):
         print(data)
 
         Like.objects.update_or_create(
-            like=data.get('like')
+            like=data.get('like'),
         )
 
 

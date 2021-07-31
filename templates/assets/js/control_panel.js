@@ -15,10 +15,14 @@
 //    }
 'use strict'
 
-let categorySelect = 'драмма';
-document.getElementById('block-description-select-id').addEventListener('change', function(e) {
- categorySelect=(e).target.value;
-});
+
+
+let categorySelectId = null;
+
+function showOptions(s) {
+  categorySelectId = parseInt(s[s.selectedIndex].id, 10); // get category id
+}
+
 const nameInput = document.getElementById('name_input_id');
 const contentInput = document.getElementById('content_input_id');
 const descriptionInput = document.getElementById('description_input_id');
@@ -32,7 +36,7 @@ sendVerseBtn.onclick = (event) => {
       name: nameInput.value,
       content: contentInput.value,
       description: descriptionInput.value,
-      category: categorySelect,
+      category_id: categorySelectId,
       tag: tagsInput.value,
       author_id: AuthorId,
     };

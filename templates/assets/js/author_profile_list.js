@@ -7,14 +7,14 @@ let testBool  = true;
                 author_id: authorId,
             };
             fetch(authorDetailUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, */*, text/plain',
-        'Content-type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken'),
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json, */*, text/plain',
+                'Content-type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+              },
+              body: JSON.stringify(data)
+            })
+            .then(response => response.json())
 }
 

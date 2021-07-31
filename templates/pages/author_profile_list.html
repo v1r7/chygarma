@@ -17,32 +17,31 @@
   </head>
   <body>
     <header class="header">
-
-            <div class="container"></div>
-      <div class="author__bg" style="background-image: url({% static 'img/author__bg.svg' %});">
-        <h1 class="author__name">Миха</h1>
-      </div>
-      <div class="author__status">
-        <div class="author__circle"></div>
-        <div class="author__status-title">
-          <div class="author__status-texts">
-            <p class="author__status-text">Произведения</p>
-            <span class="author__status-quantity">274</span>
+        <div class="container"></div>
+            <div class="author__bg" style="background-image: url({% static 'img/author__bg.svg' %});">
+                <h1 class="author__name">Миха</h1>
+            </div>
+          <div class="author__status">
+            <div class="author__circle"></div>
+            <div class="author__status-title">
+              <div class="author__status-texts">
+                <p class="author__status-text">Произведения</p>
+                <span class="author__status-quantity">274</span>
+              </div>
+              <div class="author__status-texts">
+                <p class="author__status-text">
+                  получено <br />
+                  рецензий
+                </p>
+                <span class="author__status-quantity">81 562</span>
+              </div>
+              <div class="author__status-texts">
+                <p class="author__status-text">читатели</p>
+                <span class="author__status-quantity">{{ readers_count }}</span>
+              </div>
+            </div>
+            <button class="author__status-btn" onclick="toggle()">Читать</button>
           </div>
-          <div class="author__status-texts">
-            <p class="author__status-text">
-              получено <br />
-              рецензий
-            </p>
-            <span class="author__status-quantity">81 562</span>
-          </div>
-          <div class="author__status-texts">
-            <p class="author__status-text">читатели</p>
-            <span class="author__status-quantity">{{ readers_count }}</span>
-          </div>
-        </div>
-        <button class="author__status-btn" onclick="toggle()">Читать</button>
-      </div>
     </header>
     <section class="reviews container">
       <div class="reviews__title">коментарии</div>
@@ -50,22 +49,22 @@
         <div class="reviews__blocks">
           <div class="reviews__block">
               {% for comments in comments_list %}
-              {% if forloop.counter|divisibleby:2 %}
-            <div class="reviews__box">
-              <div class="reviews__texts">
-                <p class="reviews__box-offers">{{ comments.content }}
-                </p>
-                <span class="reviews__box-author">{{ comment.author }}</span>
-              </div>
-            </div>
-              {% else %}
-                  <div class="reviews__box-brown">
-                <div class="reviews__texts">
-                  <p class="reviews__box-offers">{{ comments.content }}
-                  </p>
-                  <span class="reviews__box-author">{{ comment.author }}</span>
-                </div>
-              </div>
+                {% if forloop.counter|divisibleby:2 %}
+                    <div class="reviews__box">
+                      <div class="reviews__texts">
+                        <p class="reviews__box-offers">{{ comments.content }}
+                        </p>
+                        <span class="reviews__box-author">{{ comment.author }}</span>
+                      </div>
+                    </div>
+                {% else %}
+                      <div class="reviews__box-brown">
+                        <div class="reviews__texts">
+                          <p class="reviews__box-offers">{{ comments.content }}
+                          </p>
+                          <span class="reviews__box-author">{{ comment.author }}</span>
+                        </div>
+                      </div>
               {% endif %}
           {% endfor %}
 
@@ -101,20 +100,19 @@
 
             <div class="reviews__circles">
                 {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">
-                    <div class="reviews__circle"></div>
-                </a>
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <div class="reviews__circle"></div>
+                    </a>
                 {% else %}
-
                 {% endif %}
-            <a href=""><div class="reviews__circle-big active"></div>
+                <a href=""><div class="reviews__circle-big active"></div>
                 {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a>
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">
-                    <div class="reviews__circle"></div>
-                </a>
-            {% else %}
-            {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">
+                            <div class="reviews__circle"></div>
+                        </a>
+                    {% else %}
+                {% endif %}
             </div>
         </div>
       </div>
@@ -125,7 +123,7 @@
 {% endblock %}
 {% block js %}
     <script>
-        const authorDetailUrl = '{% url 'author_detail' author.pk %}';
+        const authorDetailUrl = '{% url "author_detail" author.pk %}';
         const authorId = '{{ author.id }}';
     </script>
 {% endblock %}

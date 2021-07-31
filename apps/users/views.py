@@ -99,28 +99,32 @@ class LogoutView(LoginRequiredMixin, View):
 class CreateListVerseView(ListView):
     template_name = 'pages/control_panel.html'
     model = Verse
-    paginate_by = 7
+    paginate_by = 2
     context_object_name = 'verses'
 
+    def get_queryset(self):
+        _qs = super(CreateListVerseView, self).get_queryset()
+
+        return _qs.filter(author__author_id=self.request.user.id).order_by('-pubdate')
+
     def get_context_data(self, *args, **kwargs):
-        context = super(CreateListVerseView, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['author_id'] = Author.objects.filter(author=self.request.user).first().id
-        context['verses'] = Verse.objects.filter(author__author_id=context.get('author_id')).order_by('-pubdate')
         context['category_list'] = Category.objects.all()
 
         return context
-
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
         print(data)
         author = Author.objects.filter(id=data.get('author_id')).first()
+        category = Category.objects.filter(id=data.get('category_id')).first()
         Verse.objects.create(
             name=data.get('name'),
             content=data.get('content'),
             author=author,
             tags=data.get('tags'),
-            category=data.get('category'),
+            category=category,
             # picture=data.get('picture'),
             description=data.get('description'),
 

@@ -112,13 +112,13 @@
                     <div id="author_search_input_block_id">
                         {% for authors in page_obj %}
                             {% if forloop.counter|divisibleby:2 %}
-{#                        <a href="{% url 'author_detail' pk=author_profile.pk %}">#}
-                            <div class="all__block-grey">{{ authors }}</div>
-{#                        </a>#}
-                            {% else %}
-{#                        <a href="{% url 'author_detail' pk=author_profile.pk %}">#}
-                            <div class="all__block-white">{{ authors }}</div>
-{#                        </a>#}
+                               <a href="{% url 'author_detail' pk=author_profile.pk %}">
+                                    <div class="all__block-grey">{{ authors }}</div>
+                                </a>
+                                    {% else %}
+                               <a href="{% url 'author_detail' pk=author_profile.pk %}">
+                                    <div class="all__block-white">{{ authors }}</div>
+                               </a>
                             {% endif %}
                         {% endfor %}
                     </div>

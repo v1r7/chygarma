@@ -63,6 +63,8 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         AuthorProfile.objects.create(author=instance)
 
 
+
+
 class AuthorProfile(models.Model):
     """Модель профиля автора"""
     author = models.OneToOneField(Author, on_delete=models.SET_NULL, null=True)
@@ -80,6 +82,17 @@ class AuthorProfile(models.Model):
     def __str__(self):
         return f'{self.author.__str__()}'
 
+class Like(models.Model):
+    """Модель Лайков"""
+    like = models.BooleanField(default=True, verbose_name='Лайки')
+    verse = models.ForeignKey(Author, verbose_name="Стих", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Лайк'
+        verbose_name_plural = 'Лайки'
+
+    def __str__(self):
+        return self.like
 
 
 class Verse(models.Model):
@@ -96,6 +109,9 @@ class Verse(models.Model):
     tags = models.ForeignKey(Tag, verbose_name='Тэги',
                              on_delete=models.SET_NULL,
                              null=True)
+    is_liked = models.ForeignKey(Like, verbose_name='Лайк', on_delete=models.SET_NULL,
+                                 null=True, blank=True,
+                                 related_name='liked_verse')
     picture = models.ImageField(verbose_name='Изображение',
                               upload_to=upload_instance, blank=True, null=True)
     pubdate = models.DateField(auto_now_add=True, verbose_name='Дата публикации')
@@ -123,19 +139,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
-
-
-class Like(models.Model):
-    """Модель Лайков"""
-    like = models.BooleanField(default=True, verbose_name='Лайки')
-    verse = models.ForeignKey(Verse, verbose_name="Стих", on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Лайк'
-        verbose_name_plural = 'Лайки'
-
-    def __str__(self):
-        return self.like
 
 
 class News(models.Model):
