@@ -88,7 +88,7 @@ class Verse(models.Model):
     tags = models.ForeignKey(Tag, verbose_name='Хэштэги',
                              on_delete=models.SET_NULL,
                              null=True)
-    is_liked = models.ManyToManyField(Author, related_name='likes', verbose_name='Лайки')
+    likes = models.ManyToManyField(Author, related_name='likes', verbose_name='Лайки')
     picture = models.ImageField(verbose_name='Изображение',
                               upload_to=upload_instance, blank=True, null=True)
     pubdate = models.DateField(auto_now_add=True, verbose_name='Дата публикации')

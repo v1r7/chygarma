@@ -18,7 +18,9 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs,):
         context = super().get_context_data(**kwargs)
-        context['popular_verses'] = Verse.objects.all().order_by('is_liked')[:5]
+        context['popular_verses'] = Verse.objects.annotate(
+            likes_count=Count('likes')
+        ).order_by('likes_count')
         context['verse_list'] = Verse.objects.filter(recommend=True).order_by("id")[:5]
         context['author_banner'] = AuthorProfile.objects.all().order_by('readers')[:3]
         context['news'] = News.objects.filter(main_page_filter=True)[:3]
@@ -65,7 +67,7 @@ class AuthorDetailView(DetailView):
         context['readers_count'] = AuthorProfile.objects.filter(author_id=author.id).\
             annotate(answer_count=Count('readers'))
         context['like_count'] = Verse.objects.filter(author_id=author.id).\
-            annotate(answer_count=Count('is_liked'))
+            annotate(answer_count=Count('likes'))
 
         return context
 
@@ -115,6 +117,7 @@ class AsyncAuthorSearchListView(ListView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body.decode())
+        print(data)
         author_search_list = self.queryset.filter(Q(author__first_name__icontains=data.get('value')) |
                                                   Q(author__last_name__icontains=data.get('value')))
         context = {'author_search_list': author_search_list}
@@ -146,7 +149,7 @@ class AllVersesListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["all_verses"] = Verse.objects.all()
-        context['popular_verses_list'] = Verse.objects.all().order_by('is_liked')[:7]
+        context['popular_verses_list'] = Verse.objects.all().order_by('likes')[:7]
 
         return context
 
@@ -162,7 +165,7 @@ class VerseDetailView(DetailView):
             verse__id=verse.id
         ).order_by('-create_at')
 
-        context['verse_likes'] = Verse.objects.filter(name=verse).annotate(like_count=Count('is_liked'))
+        context['verse_likes'] = Verse.objects.filter(name=verse).annotate(like_count=Count('likes'))
 
 
         return context
@@ -192,7 +195,7 @@ class VerseDetailView(DetailView):
             data = json.loads(request.body.decode())
             user = self.request.user
             instance = Verse.objects.get(id=data.get('verse_id'))
-            instance.is_liked.add(*[user.id])
+            instance.likes.add(*[user.id])
             instance.save()
 
             return JsonResponse({'detail': 'success'}, status=201)

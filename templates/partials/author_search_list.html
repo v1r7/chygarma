@@ -1,7 +1,7 @@
 {% for authors in author_search_list %}
         {% if forloop.counter|divisibleby:2 %}
-             <div class="all__block-grey">{{ authors }}</div>
+             <div class="creation__title-grey">{{ authors }}</div>
         {% else %}
-             <div class="all__block-white">{{ authors }}</div>
+             <div class="creation__title-white">{{ authors }}</div>
         {% endif %}
 {% endfor %}

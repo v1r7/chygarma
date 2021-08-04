@@ -109,9 +109,10 @@ class CreateListVerseView(ListView):
         context['verse_count'] = Verse.objects.filter(author_id=author.id). \
             annotate(answer_count=Count('name'))
         context['profile_readers'] = AuthorProfile.objects.filter(author_id=author.id)\
-            .annotate(reader_count=Count('readers'))
-        context['likes_count'] = Verse.objects.filter(author_id=author.id)\
-            .annotate(article_count=Count('is_liked')).count()
+            .aggregate(count=Count('readers'))
+        context['likes'] = Verse.objects.filter(
+            author_id=author.id
+        ).aggregate(count=Count('likes'))
 
         return context
 

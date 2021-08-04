@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Underdog&display=swap" rel="stylesheet">
-{#    <link rel="stylesheet" href="{% static 'css/pagework.css' %}" />#}
-{#    <link rel="stylesheet" href="{% static 'css/main.css' %}" />#}
+<!--{#    <link rel="stylesheet" href="{% static 'css/pagework.css' %}" />#}-->
+<!--{#    <link rel="stylesheet" href="{% static 'css/main.css' %}" />#}-->
     <link rel="stylesheet" href="{% static 'css/authordashboard.css' %}" />
 
   </head>
@@ -108,11 +108,11 @@
             </div>
             <div class="statistic">
               <p class="statistic__text-num">Лайки</p>
-              <span class="statistic__text-num">{{ likes_count }}</span>
+              <span class="statistic__text-num">{{ likes.count }}</span>
             </div>
             <div class="statistic">
               <p class="statistic__text-num">читатели</p>
-              <span class="statistic__text-num">{{ profile_readers.all.count }}</span>
+              <span class="statistic__text-num">{{ profile_readers.count }}</span>
             </div>
           </div>
         </div>
@@ -307,8 +307,8 @@
 
 <script src="{% static 'js/control_panel.js' %}"></script>
 <script src="{% static 'js/search_input.js' %}"></script>
-{#<script src="{% static 'js/burger.js' %}"></script>#}
-<script src="{% static 'js/file.js' %}"></script>
+<!--{#<script src="{% static 'js/burger.js' %}"></script>#}-->
+<!--<script src="{% static 'js/file.js' %}"></script>-->
 
  <script>
         function getCookie(name) {

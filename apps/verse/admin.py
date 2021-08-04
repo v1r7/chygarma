@@ -21,7 +21,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Verse)
 class VerseAdmin(admin.ModelAdmin):
     list_display = ['name', 'author', 'content', 'tags', 'category', 'description', 'recommend', 'get_image']
-    filter_horizontal = ['is_liked']
+    filter_horizontal = ['likes']
 
 
     list_filter = ['pubdate', ]

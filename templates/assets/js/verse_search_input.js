@@ -12,8 +12,9 @@ searchInput.onkeyup = (event) => {
     fetch(allVerseSearchUrl, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json, */*, text/plain',
         'Content-type': 'application/json',
-        'Accept': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       },
       body: JSON.stringify(data)
     })
